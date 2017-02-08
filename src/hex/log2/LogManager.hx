@@ -1,4 +1,5 @@
 package hex.log2;
+import hex.log2.message.IMessageFactory;
 
 typedef ClassInfo = {
 	var fqcn:String;
@@ -7,24 +8,31 @@ typedef ClassInfo = {
 class LogManager 
 {
 
-	static var context = new LoggerContext();
+	static public inline var ROOT_LOGGER_NAME:String = "";
 	
-	public static function getLoggerByClassInfo(classInfo:ClassInfo):ILogger
+	public static var context:ILoggerContext = new LoggerContext();
+	
+	public static function getLoggerByClassInfo(classInfo:ClassInfo, ?messageFactory:IMessageFactory = null):ILogger
 	{
-		return getContextByClassInfo(classInfo).getLoggerByClassInfo(classInfo);
+		return getContextByClassInfo(classInfo).getLoggerByClassInfo(classInfo, messageFactory);
 	}
 	
-	public static function getLogger(?name:String = ""):ILogger
+	public static function getLogger(?name:String = "", ?messageFactory:IMessageFactory = null):ILogger
 	{
-		return getContext(name).getLogger(name);
+		return getContext(name).getLogger(name, messageFactory);
 	}
 	
-	static function getContextByClassInfo(classInfo:ClassInfo):LoggerContext
+	static public function getRootLogger():ILogger
+	{
+		return getLogger(ROOT_LOGGER_NAME);
+	}
+	
+	static function getContextByClassInfo(classInfo:ClassInfo):ILoggerContext
 	{
 		return context;
 	}
 	
-	static function getContext(name:String):LoggerContext
+	static function getContext(name:String):ILoggerContext
 	{
 		return context;
 	}

@@ -7,6 +7,8 @@ import hex.log2.configuration.IConfiguration;
 import hex.log2.filter.IFilter.FilterResult;
 import hex.log2.internal.AbstractLogger;
 import hex.log2.message.IMessage;
+import hex.log2.message.IMessageFactory;
+import hex.log2.message.ParameterizedMessageFactory;
 
 /**
  * ...
@@ -15,26 +17,26 @@ import hex.log2.message.IMessage;
 class Logger extends AbstractLogger
 {
 	var privateConfig:PrivateLoggerConfig;
-	public var name:String;
+	var name:String;
 
-	public function new(context:LoggerContext, name:String)
+	public function new(context:LoggerContext, name:String, ?messageFactory:IMessageFactory)
 	{
-		super();
+		super((messageFactory == null) ? ParameterizedMessageFactory.instance : messageFactory);
 		this.name = name;
 		privateConfig = new PrivateLoggerConfig(context.getConfiguration(), this);
 	}
 
-	override public function isEnabled(level:LogLevel, message:Dynamic, ?params:Array<Dynamic>, posInfos:PosInfos):Bool 
+	override public function isEnabled(level:LogLevel, message:Dynamic, ?params:Array<Dynamic>, ?posInfos:PosInfos):Bool 
 	{
 		return privateConfig.filter(level, message, params, posInfos);
 	}
 	
-	override public function isMessageEnabled(level:LogLevel, message:IMessage, posInfos:PosInfos):Bool 
+	override public function isMessageEnabled(level:LogLevel, message:IMessage, ?posInfos:PosInfos):Bool 
 	{
 		return privateConfig.filterMessage(level, message, posInfos);
 	}
 	
-	override public function logEnabledMessage(level:LogLevel, message:IMessage, posInfos:PosInfos):Void 
+	override public function logEnabledMessage(level:LogLevel, message:IMessage, ?posInfos:PosInfos):Void 
 	{
 		privateConfig.logEvent(new LogEvent(message, level, null, posInfos));
 	}
@@ -42,6 +44,11 @@ class Logger extends AbstractLogger
 	override public function getLevel():LogLevel 
 	{
 		return privateConfig.loggerConfigLevel;
+	}
+	
+	override public function getName():String 
+	{
+		return name;
 	}
 	
 }
@@ -59,7 +66,7 @@ class PrivateLoggerConfig
 	{
 		this.logger = logger;
 		this.config = configuration;
-		this.loggerConfig = configuration.getLoggerConfig(logger.name);
+		this.loggerConfig = configuration.getLoggerConfig(logger.getName());
 		this.loggerConfigLevel = loggerConfig.level;
 	}
 
@@ -68,14 +75,14 @@ class PrivateLoggerConfig
 		loggerConfig.log(event);
 	}
 
-	public function filter(level:LogLevel, message:Dynamic, params:Array<Dynamic>, posInfos:PosInfos)
+	public function filter(level:LogLevel, message:Dynamic, params:Array<Dynamic>, ?posInfos:PosInfos)
 	{
 		return filterInternal(level, function(filter) {
 			return filter.filter(logger, level, message, params, posInfos);
 		});
 	}
 	
-	public function filterMessage(level:LogLevel, message:IMessage, posInfos:PosInfos)
+	public function filterMessage(level:LogLevel, message:IMessage, ?posInfos:PosInfos)
 	{
 		return filterInternal(level, function(filter) {
 			return filter.filterMessage(logger, level, message, posInfos);

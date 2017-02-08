@@ -5,9 +5,20 @@ import hex.log2.message.IMessage;
  * ...
  * @author ...
  */
-class SimpleMessageFactory implements IMessageFactory 
+class SimpleMessageFactory implements IMessageFactory
 {
-
+	
+	public static var instance(get, null):IMessageFactory;
+	
+	static function get_instance():IMessageFactory 
+	{
+		if (instance == null)
+		{
+			instance = new SimpleMessageFactory();
+		}
+		return instance;
+	}
+	
 	public function new() 
 	{
 	}
@@ -16,5 +27,11 @@ class SimpleMessageFactory implements IMessageFactory
 	{
 		return new SimpleMessage(message);
 	}
+		
+	public function newObjectMessage(message:Dynamic):IMessage
+	{
+		return new ObjectMessage(message);
+	}
+	
 	
 }

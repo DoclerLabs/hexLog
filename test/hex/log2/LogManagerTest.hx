@@ -19,6 +19,13 @@ class LogManagerTest
 		Assert.isNotNull(logger);
 	}
 	
+	@Test("Get logger with null name")
+	public function testGetLoggerNullName()
+	{
+		var logger = LogManager.getLogger(null);
+		Assert.isNotNull(logger);
+	}
+	
 	@Test("Get logger with name")
 	public function testGetLoggerName()
 	{
@@ -31,6 +38,8 @@ class LogManagerTest
 	{
 		var logger1 = LogManager.getLogger("TestLogger");
 		var logger2 = LogManager.getLogger("TestLogger");
+		
+		Assert.equals(logger1.getName(), logger2.getName(), "Names must be same");
 		Assert.equals(logger1, logger2);
 	}
 	
@@ -39,6 +48,8 @@ class LogManagerTest
 	{
 		var logger1 = LogManager.getLogger("TestLogger1");
 		var logger2 = LogManager.getLogger("TestLogger2");
+		
+		Assert.notEquals(logger1.getName(), logger2.getName(), "Names must be different");
 		Assert.notEquals(logger1, logger2);
 	}
 	
@@ -49,11 +60,20 @@ class LogManagerTest
 		Assert.isNotNull(logger);
 	}
 	
+	@Test("Get logger with null class info")
+	public function testGetLoggerNullClassInfo()
+	{
+		var logger = LogManager.getLoggerByClassInfo(null);
+		Assert.isNotNull(logger);
+	}
+	
 	@Test("Loggers with same class info are same instance")
 	public function testGetLoggerByClassInfoSameInfoSameInstance()
 	{
 		var logger1 = LogManager.getLoggerByClassInfo({fqcn:"hex.log2.LogManagerTest"});
 		var logger2 = LogManager.getLoggerByClassInfo({fqcn:"hex.log2.LogManagerTest"});
+		
+		Assert.equals(logger1.getName(), logger2.getName(), "Names must be same");
 		Assert.equals(logger1, logger2);
 	}
 	
@@ -62,7 +82,20 @@ class LogManagerTest
 	{
 		var logger1 = LogManager.getLoggerByClassInfo({fqcn:"hex.log2.LogManagerTest1"});
 		var logger2 = LogManager.getLoggerByClassInfo({fqcn:"hex.log2.LogManagerTest2"});
+		
+		Assert.notEquals(logger1.getName(), logger2.getName(), "Names must be different");
 		Assert.notEquals(logger1, logger2);
+	}
+	
+	
+	@Test("Get root logger")
+	public function testGetRootLogger()
+	{
+		Assert.isNotNull(LogManager.getRootLogger());
+		Assert.isNotNull(LogManager.getLogger(""));
+		Assert.isNotNull(LogManager.getLogger(LogManager.ROOT_LOGGER_NAME));
+		Assert.equals(LogManager.getRootLogger(), LogManager.getLogger(""));
+		Assert.equals(LogManager.getRootLogger(), LogManager.getLogger(LogManager.ROOT_LOGGER_NAME));
 	}
 	
 	

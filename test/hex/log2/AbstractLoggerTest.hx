@@ -4,9 +4,9 @@ import haxe.PosInfos;
 import hex.log2.LogLevel;
 import hex.log2.internal.AbstractLogger;
 import hex.log2.message.IMessage;
-import hex.log2.message.ParametrizedMessage;
-import hex.log2.message.ParametrizedMessageFactory;
+import hex.log2.message.IMessageFactory;
 import hex.log2.message.SimpleMessage;
+import hex.log2.message.SimpleMessageFactory;
 import hex.unittest.assertion.Assert;
 
 /**
@@ -33,7 +33,7 @@ class AbstractLoggerTest
 		simpleParam = { param: "World" };
 		
 		simpleMessage = new SimpleMessage(str);
-		complexMessage = new ParametrizedMessage(str, [simpleParam]);
+		complexMessage = new MessageWithParams(str, [simpleParam]);
 		events = [
 			{
 				message: new SimpleMessage(null),
@@ -167,7 +167,6 @@ class AbstractLoggerTest
 		Assert.equals(1, logger.countMsg);
 		Assert.equals(3, logger.countStr);
 	}
-	
 }
 
 class CountingLogger extends AbstractLogger
@@ -181,10 +180,10 @@ class CountingLogger extends AbstractLogger
 	
 	public function new() 
 	{
-		super(new ParametrizedMessageFactory());
+		super(new ParamsMessageFactory());
 	}
 	
-	override public function isEnabled(level:LogLevel, message:Dynamic, ?params:Array<Dynamic>, posInfos:PosInfos):Bool 
+	override public function isEnabled(level:LogLevel, message:Dynamic, ?params:Array<Dynamic>, ?posInfos:PosInfos):Bool 
 	{
 		countStr++;
 		Assert.isTrue(level == currentLevel, "isEnabled - Levels must be the same");
@@ -203,7 +202,7 @@ class CountingLogger extends AbstractLogger
 		return true;
 	}
 	
-	override public function isMessageEnabled(level:LogLevel, message:IMessage, posInfos:PosInfos):Bool 
+	override public function isMessageEnabled(level:LogLevel, message:IMessage, ?posInfos:PosInfos):Bool 
 	{
 		countMsg++;
 		Assert.isTrue(level == currentLevel, "isMessageEnabled - Levels must be the same");
@@ -211,7 +210,7 @@ class CountingLogger extends AbstractLogger
 		return true;
 	}
 
-	override public function logEnabledMessage(level:LogLevel, message:IMessage, posInfos:PosInfos):Void 
+	override public function logEnabledMessage(level:LogLevel, message:IMessage, ?posInfos:PosInfos):Void 
 	{
 		Assert.isTrue(level == currentLevel, "logEnabledMessage - Levels must be the same");
 		Assert.isTrue(message.getFormattedMessage() == currentEvent.message.getFormattedMessage(), "logEnabledMessage - Messages must be the same");
@@ -240,3 +239,33 @@ typedef TestLogEvent = {
 	var messageString:String;
 	var params:Array<Dynamic>;
 };
+
+class MessageWithParams extends SimpleMessage
+{
+	var params:Array<Dynamic>;
+	
+	public function new(message:String, params:Array<Dynamic>) 
+	{
+		super(message);
+		this.params = params;
+		
+	}
+	
+	override public function getParameters():Array<Dynamic> 
+	{
+		return params;
+	}
+}
+
+class ParamsMessageFactory extends SimpleMessageFactory
+{
+	public function new() 
+	{
+		super();
+	}
+	
+	override public function newMessage(message:String, ?params:Array<Dynamic>):IMessage 
+	{
+		return new MessageWithParams(message, params);
+	}
+}

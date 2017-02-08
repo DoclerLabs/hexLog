@@ -14,8 +14,8 @@ enum FilterResult
 
 interface IFilter 
 {
-	function filter(logger:Logger, level:LogLevel, message:Dynamic, params:Array<Dynamic>, posInfos:PosInfos):FilterResult;
+	function filter(logger:Logger, level:LogLevel, message:Dynamic, params:Array<Dynamic>, ?posInfos:PosInfos):FilterResult;
 	function filterEvent(event:LogEvent):FilterResult;
-	function filterMessage(logger:Logger, level:LogLevel, message:IMessage, posInfos:PosInfos):FilterResult;
+	function filterMessage(logger:Logger, level:LogLevel, message:IMessage, ?posInfos:PosInfos):FilterResult;
 	function filterLoggerMessage(logger:Logger, message:IMessage):FilterResult;
 }

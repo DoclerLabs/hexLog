@@ -30,4 +30,6 @@ interface ILogger
 	
 	function getLevel():LogLevel;
 	
+	function getName():String;
+	
 }

@@ -2,12 +2,13 @@ package hex.log2;
 import hex.log2.LogManager.ClassInfo;
 import hex.log2.configuration.BasicConfiguration;
 import hex.log2.configuration.IConfiguration;
+import hex.log2.message.IMessageFactory;
 
 /**
  * ...
  * @author ...
  */
-class LoggerContext 
+class LoggerContext implements ILoggerContext
 {
 
 	var configuration:IConfiguration = new BasicConfiguration();
@@ -17,16 +18,23 @@ class LoggerContext
 	{
 	}
 	
-	public function getLoggerByClassInfo(classInfo:ClassInfo):ILogger
+	public function getLoggerByClassInfo(classInfo:ClassInfo, ?messageFactory:IMessageFactory):ILogger
 	{
-		return getLogger(classInfo.fqcn);
+		if(classInfo == null)
+		{
+			return getLogger(null, messageFactory);
+		}
+		else
+		{
+			return getLogger(classInfo.fqcn, messageFactory);
+		}
 	}
 	
-	public function getLogger(name:String):ILogger
+	public function getLogger(name:String, ?messageFactory:IMessageFactory):ILogger
 	{
 		if (!loggerRegistry.exists(name))
 		{
-			var logger = new Logger(this, name);
+			var logger = new Logger(this, name, messageFactory);
 			loggerRegistry.set(name, logger);
 		}
 		return loggerRegistry.get(name);

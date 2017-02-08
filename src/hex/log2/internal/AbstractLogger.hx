@@ -2,11 +2,10 @@ package hex.log2.internal;
 
 import haxe.PosInfos;
 import hex.log2.IExtendedLogger;
-import hex.log2.ILogger;
 import hex.log2.LogLevel;
 import hex.log2.message.IMessage;
 import hex.log2.message.IMessageFactory;
-import hex.log2.message.SimpleMessageFactory;
+import hex.log2.message.ParameterizedMessageFactory;
 
 /**
  * ...
@@ -19,7 +18,7 @@ class AbstractLogger implements IExtendedLogger
 	
 	public function new(?messageFactory:IMessageFactory) 
 	{
-		this.messageFactory = (messageFactory == null) ? new SimpleMessageFactory() : messageFactory;
+		this.messageFactory = (messageFactory == null) ? ParameterizedMessageFactory.instance : messageFactory;
 	}
 	
 	public function log(level:LogLevel, message:Dynamic, ?params:Array<Dynamic>, ?posInfos:PosInfos):Void 
@@ -82,15 +81,22 @@ class AbstractLogger implements IExtendedLogger
 		logMessageIfEnabled(LogLevel.FATAL, message, posInfos);
 	}
 	
-	public function logIfEnabled(level:LogLevel, message:Dynamic, ?params:Array<Dynamic>, posInfos:PosInfos):Void
+	public function logIfEnabled(level:LogLevel, message:Dynamic, ?params:Array<Dynamic>, ?posInfos:PosInfos):Void
 	{
 		if (isEnabled(level, message, params, posInfos))
 		{
-			logEnabledMessage(level, messageFactory.newMessage(message, params), posInfos);
+			if(Std.is(message, String) || message == null)
+			{
+				logEnabledMessage(level, messageFactory.newMessage(message, params), posInfos);
+			}
+			else
+			{
+				logEnabledMessage(level, messageFactory.newObjectMessage(message), posInfos);
+			}
 		}
 	}
 	
-	public function logMessageIfEnabled(level:LogLevel, message:IMessage, posInfos:PosInfos):Void
+	public function logMessageIfEnabled(level:LogLevel, message:IMessage, ?posInfos:PosInfos):Void
 	{
 		if (isMessageEnabled(level, message, posInfos))
 		{
@@ -98,22 +104,32 @@ class AbstractLogger implements IExtendedLogger
 		}
 	}
 	
-	public function logEnabledMessage(level:LogLevel, message:IMessage, posInfos:PosInfos):Void
+	public function logEnabledMessage(level:LogLevel, message:IMessage, ?posInfos:PosInfos):Void
 	{
 		throw "This method must be implemented";
 	}
 	
-	public function isEnabled(level:LogLevel, message:Dynamic, ?params:Array<Dynamic>, posInfos:PosInfos):Bool
+	public function isLevelEnabled(level:LogLevel):Bool 
+	{
+		return isEnabled(level, null);
+	}
+	
+	public function isEnabled(level:LogLevel, message:Dynamic, ?params:Array<Dynamic>, ?posInfos:PosInfos):Bool
 	{
 		throw "This method must be implemented";
 	}
 	
-	public function isMessageEnabled(level:LogLevel, message:IMessage, posInfos:PosInfos):Bool
+	public function isMessageEnabled(level:LogLevel, message:IMessage, ?posInfos:PosInfos):Bool
 	{
 		throw "This method must be implemented";
 	}
 	
 	public function getLevel():LogLevel 
+	{
+		throw "This method must be implemented";
+	}
+	
+	public function getName():String 
 	{
 		throw "This method must be implemented";
 	}
