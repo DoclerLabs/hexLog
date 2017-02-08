@@ -1,10 +1,11 @@
 package hex.log2;
 
 import haxe.PosInfos;
-import hex.log2.AbstractLoggerTest.CountingLogger;
 import hex.log2.LogLevel;
 import hex.log2.internal.AbstractLogger;
 import hex.log2.message.IMessage;
+import hex.log2.message.ParametrizedMessage;
+import hex.log2.message.ParametrizedMessageFactory;
 import hex.log2.message.SimpleMessage;
 import hex.unittest.assertion.Assert;
 
@@ -15,24 +16,45 @@ import hex.unittest.assertion.Assert;
 class AbstractLoggerTest 
 {
 
+	var str:String;
+	var events:Array<TestLogEvent>;
+	var simpleParam:Dynamic;
+	var simpleMessage:IMessage;
+	var complexMessage:IMessage;
+
 	public function new() 
 	{
 	}
 	
-	var str = "Hello";
-	var simpleParam = { param: "World" };
-	var simpleMessage:IMessage;
-	
-	var events:Array<TestLogEvent>;
-	
 	@Before
 	public function setup()
 	{
+		str = "Hello";
+		simpleParam = { param: "World" };
+		
 		simpleMessage = new SimpleMessage(str);
+		complexMessage = new ParametrizedMessage(str, [simpleParam]);
 		events = [
-			new TestLogEvent(new SimpleMessage(null), null, null),
-			new TestLogEvent(simpleMessage, str, null),
-			new TestLogEvent(simpleMessage, str, [simpleParam])
+			{
+				message: new SimpleMessage(null),
+				messageString: null,
+				params: null
+			},
+			{
+				message: simpleMessage,
+				messageString: str,
+				params: null
+			},
+			{
+				message: simpleMessage,
+				messageString: str,
+				params: null
+			},
+			{
+				message: complexMessage,
+				messageString: str,
+				params: [simpleParam]
+			}
 		];
 	}
 	
@@ -51,24 +73,30 @@ class AbstractLoggerTest
 		logger.currentEvent = events[2];
 		logger.debug(str, [simpleParam]);
 		
-		logger.debugMessage(simpleMessage);
+		logger.currentEvent = events[3];
+		logger.debugMessage(complexMessage);
 		
 		Assert.equals(1, logger.countMsg);
 		Assert.equals(3, logger.countStr);
 	}
-	/*
+	
 	@Test("Test info function")
 	public function testInfo()
 	{
 		var logger = new CountingLogger();
 		logger.currentLevel = LogLevel.INFO;
 		
-		logger.currentMessage = simpleMessage;
-		logger.infoMessage(simpleMessage);
-		
+		logger.currentEvent = events[0];
 		logger.info(null);
+		
+		logger.currentEvent = events[1];
 		logger.info(str);
+		
+		logger.currentEvent = events[2];
 		logger.info(str, [simpleParam]);
+		
+		logger.currentEvent = events[3];
+		logger.infoMessage(complexMessage);
 		
 		Assert.equals(1, logger.countMsg);
 		Assert.equals(3, logger.countStr);
@@ -80,12 +108,17 @@ class AbstractLoggerTest
 		var logger = new CountingLogger();
 		logger.currentLevel = LogLevel.WARN;
 		
-		logger.currentMessage = simpleMessage;
-		logger.warnMessage(simpleMessage);
-		
+		logger.currentEvent = events[0];
 		logger.warn(null);
+		
+		logger.currentEvent = events[1];
 		logger.warn(str);
+		
+		logger.currentEvent = events[2];
 		logger.warn(str, [simpleParam]);
+		
+		logger.currentEvent = events[3];
+		logger.warnMessage(complexMessage);
 		
 		Assert.equals(1, logger.countMsg);
 		Assert.equals(3, logger.countStr);
@@ -97,12 +130,17 @@ class AbstractLoggerTest
 		var logger = new CountingLogger();
 		logger.currentLevel = LogLevel.ERROR;
 		
-		logger.currentMessage = simpleMessage;
-		logger.errorMessage(simpleMessage);
-		
+		logger.currentEvent = events[0];
 		logger.error(null);
+		
+		logger.currentEvent = events[1];
 		logger.error(str);
+		
+		logger.currentEvent = events[2];
 		logger.error(str, [simpleParam]);
+		
+		logger.currentEvent = events[3];
+		logger.errorMessage(complexMessage);
 		
 		Assert.equals(1, logger.countMsg);
 		Assert.equals(3, logger.countStr);
@@ -114,18 +152,21 @@ class AbstractLoggerTest
 		var logger = new CountingLogger();
 		logger.currentLevel = LogLevel.FATAL;
 		
-		logger.currentMessage = simpleMessage;
-		logger.fatalMessage(simpleMessage);
-		
+		logger.currentEvent = events[0];
 		logger.fatal(null);
+		
+		logger.currentEvent = events[1];
 		logger.fatal(str);
+		
+		logger.currentEvent = events[2];
 		logger.fatal(str, [simpleParam]);
+		
+		logger.currentEvent = events[3];
+		logger.fatalMessage(complexMessage);
 		
 		Assert.equals(1, logger.countMsg);
 		Assert.equals(3, logger.countStr);
 	}
-	*/
-	
 	
 }
 
@@ -140,23 +181,23 @@ class CountingLogger extends AbstractLogger
 	
 	public function new() 
 	{
-		super();
+		super(new ParametrizedMessageFactory());
 	}
 	
 	override public function isEnabled(level:LogLevel, message:Dynamic, ?params:Array<Dynamic>, posInfos:PosInfos):Bool 
 	{
 		countStr++;
-		Assert.isTrue(level == currentLevel, "Levels must be the same");
-		Assert.isTrue(message == currentEvent.messageString, "Messages must be the same");
+		Assert.isTrue(level == currentLevel, "isEnabled - Levels must be the same");
+		Assert.isTrue(message == currentEvent.messageString, "isEnabled - Messages must be the same");
 		if (currentEvent.params != null)
 		{
 			if (params == null)
 			{
-				Assert.fail("Params must be defined");
+				Assert.fail("isEnabled - Params must be defined");
 			}
 			else
 			{
-				Assert.deepEquals(currentEvent.params, params, "Params must be same");
+				Assert.deepEquals(currentEvent.params, params, "isEnabled - Params must be same");
 			}
 		}
 		return true;
@@ -165,15 +206,26 @@ class CountingLogger extends AbstractLogger
 	override public function isMessageEnabled(level:LogLevel, message:IMessage, posInfos:PosInfos):Bool 
 	{
 		countMsg++;
-		Assert.isTrue(level == currentLevel, "Levels must be the same");
-		Assert.isTrue(message.getFormattedMessage() == currentEvent.message.getFormattedMessage(), "Messages must be the same");
+		Assert.isTrue(level == currentLevel, "isMessageEnabled - Levels must be the same");
+		Assert.isTrue(message.getFormattedMessage() == currentEvent.message.getFormattedMessage(), "isMessageEnabled - Messages must be the same");
 		return true;
 	}
 
 	override public function logEnabledMessage(level:LogLevel, message:IMessage, posInfos:PosInfos):Void 
 	{
-		Assert.isTrue(level == currentLevel, "Levels must be the same");
-		Assert.isTrue(message.getFormattedMessage() == currentEvent.message.getFormattedMessage(), "Messages must be the same");
+		Assert.isTrue(level == currentLevel, "logEnabledMessage - Levels must be the same");
+		Assert.isTrue(message.getFormattedMessage() == currentEvent.message.getFormattedMessage(), "logEnabledMessage - Messages must be the same");
+		if (currentEvent.params != null)
+		{
+			if (message.getParameters() == null)
+			{
+				Assert.fail("logEnabledMessage - Params must be defined");
+			}
+			else
+			{
+				Assert.deepEquals(currentEvent.params, message.getParameters(), "logEnabledMessage - Params must be same");
+			}
+		}
 	}
 
 	override public function getLevel():LogLevel 
@@ -183,16 +235,8 @@ class CountingLogger extends AbstractLogger
 	
 }
 
-class TestLogEvent
-{
-	public var message:IMessage;
-	public var messageString:String;
-	public var params:Array<Dynamic>;
-	
-	public function new(message:IMessage, messageString:String, params:Array<Dynamic>)
-	{
-		this.params = params;
-		this.messageString = messageString;
-		this.message = message;
-	}
-}
+typedef TestLogEvent = {
+	var message:IMessage;
+	var messageString:String;
+	var params:Array<Dynamic>;
+};
