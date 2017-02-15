@@ -95,4 +95,14 @@ class LogLevel
 		
 		return "";
 	}
+	
+	public function isMoreSpecificThan(level:LogLevel):Bool
+	{
+		return value <= level.value;
+	}
+	
+	public function isLessSpecificThan(level:LogLevel):Bool
+	{
+		return value >= level.value;
+	}
 }
