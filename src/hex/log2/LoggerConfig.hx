@@ -13,19 +13,19 @@ import hex.log2.target.ILogTarget;
  */
 class LoggerConfig extends AbstractFilterable
 {
-
 	public var name(default, null):String;
 	@:isVar public var level(get, set):LogLevel;
 	public var parent(default, default):LoggerConfig;
 	var logTargets:Array<LogTargetControl>;
 	var config:IConfiguration;
+	var additive:Bool = true;
 	
 	public function new(name:String = null, logLevel:LogLevel = null, config:IConfiguration = null) 
 	{
 		super();
 		this.config = config;
 		this.name = name;
-		this.level = logLevel;
+		this.level = logLevel;//logLevel == null ? LogLevel.ERROR : logLevel;
 		logTargets = new Array<LogTargetControl>();
 	}
 	
@@ -39,7 +39,7 @@ class LoggerConfig extends AbstractFilterable
 		return level == null ? parent.level : level;
 	}
 	
-	public function addAppender(logTarget:ILogTarget, level:LogLevel, filter:IFilter):Void
+	public function addLogTarget(logTarget:ILogTarget, level:LogLevel, filter:IFilter):Void
 	{
 		logTargets.push(new LogTargetControl(logTarget, level, filter));
 	}
@@ -72,7 +72,7 @@ class LoggerConfig extends AbstractFilterable
 	
 	function logParent(event:LogEvent):Void
 	{
-        if (/*additive && */parent != null) {
+        if (additive && parent != null) {
             parent.log(event);
         }
     }
@@ -84,11 +84,22 @@ class LoggerConfig extends AbstractFilterable
 		});
     }
 	
+	override public function isFiltered(event:LogEvent):Bool 
+	{
+		var filtered = super.isFiltered(event);
+		if (!filtered && level != null)
+		{
+			return level.value < event.level.value;
+		}
+		return filtered;
+	}
+	
 	public static function createLogger(name:String, level:LogLevel, config:IConfiguration, filter:IFilter):LoggerConfig
 	{
         var loggerName = name == "root" ? "" : name;
 		return new LoggerConfig(name, level, config);
 	}
+	
 	
 }
 
@@ -97,7 +108,7 @@ class RootLogger extends LoggerConfig
 	public static function createLogger(?level:LogLevel):LoggerConfig
 	{
 		var actualLevel:LogLevel = level == null ? LogLevel.ERROR : level;
-		return new LoggerConfig("root", actualLevel);
+		return new LoggerConfig("", actualLevel);
 	}
 }
 
@@ -113,7 +124,7 @@ class LogTargetControl extends AbstractFilterable
 		super(filter);
 		this.filter = filter;
 		this.level = level;
-		this.intLevel = level.value;
+		this.intLevel = level == null ? LogLevel.ALL.value : level.value;
 		this.logTarget = logTarget;
 		this.logTargetName = logTarget.getName();
 	}

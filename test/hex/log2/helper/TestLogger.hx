@@ -8,11 +8,13 @@ import hex.log2.message.ParameterizedMessageFactory;
 
 class TestLogger extends AbstractLogger
 {
+	var name:String;
 	public var entries(default, null):List<String>;
 	
 	public function new(name:String, messageFactory:IMessageFactory) 
 	{
 		super(messageFactory == null ? ParameterizedMessageFactory.instance : messageFactory);
+		this.name = name;
 		entries = new List<String>();
 	}
 	
@@ -46,5 +48,10 @@ class TestLogger extends AbstractLogger
 	override public function getLevel():LogLevel 
 	{
 		return LogLevel.ALL;
+	}
+	
+	override public function getName():String 
+	{
+		return name;
 	}
 }

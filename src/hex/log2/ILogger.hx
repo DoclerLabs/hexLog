@@ -32,4 +32,6 @@ interface ILogger
 	
 	function getName():String;
 	
+	function getContext():ILoggerContext;
+	
 }

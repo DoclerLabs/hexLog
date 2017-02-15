@@ -12,7 +12,12 @@ class LoggerContext implements ILoggerContext
 {
 
 	var configuration:IConfiguration = new BasicConfiguration();
-	var loggerRegistry:Map<String,ILogger> = new Map<String,ILogger>();
+	var loggerRegistry:Map<String,Logger> = new Map<String,Logger>();
+	
+	public static function getContext():LoggerContext
+	{
+		return cast LogManager.getContext();
+	}
 	
 	public function new() 
 	{
@@ -43,6 +48,14 @@ class LoggerContext implements ILoggerContext
 	public function getConfiguration():IConfiguration
 	{
 		return configuration;
+	}
+	
+	public function updateLoggers():Void 
+	{
+		for (logger in loggerRegistry)
+		{
+			logger.updateConfiguration(configuration);
+		}
 	}
 	
 }

@@ -2,6 +2,7 @@ package hex.log2.internal;
 
 import haxe.PosInfos;
 import hex.log2.IExtendedLogger;
+import hex.log2.ILoggerContext;
 import hex.log2.LogLevel;
 import hex.log2.message.IMessage;
 import hex.log2.message.IMessageFactory;
@@ -130,6 +131,11 @@ class AbstractLogger implements IExtendedLogger
 	}
 	
 	public function getName():String 
+	{
+		throw "This method must be implemented";
+	}
+	
+	public function getContext():ILoggerContext 
 	{
 		throw "This method must be implemented";
 	}

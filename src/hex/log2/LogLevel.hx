@@ -6,13 +6,13 @@ package hex.log2;
  */
 class LogLevel
 {
-    static var _ALL 	= new LogLevel( 0 );
-    static var _DEBUG 	= new LogLevel( 10000 );
-    static var _INFO 	= new LogLevel( 20000 );
-    static var _WARN 	= new LogLevel( 30000 );
-    static var _ERROR 	= new LogLevel( 40000 );
-    static var _FATAL 	= new LogLevel( 50000 );
-    static var _OFF 	= new LogLevel( 60000 );
+    static var _ALL 	= new LogLevel( 9999999 );
+    static var _DEBUG 	= new LogLevel( 5000 );
+    static var _INFO 	= new LogLevel( 4000 );
+    static var _WARN 	= new LogLevel( 3000 );
+    static var _ERROR 	= new LogLevel( 2000 );
+    static var _FATAL 	= new LogLevel( 1000 );
+    static var _OFF 	= new LogLevel( 0 );
 	
 	@:isVar public static var LEVELS( get, null ) : Array<LogLevel>;
 	static function get_LEVELS() : Array<LogLevel>
@@ -77,19 +77,19 @@ class LogLevel
 	{
 		switch( this.value )
 		{
-			case 0 :
+			case 9999999 :
 				return "ALL";
-			case 10000 :
+			case 5000 :
 				return "DEBUG";
-			case 20000 :
+			case 4000 :
 				return "INFO";
-			case 30000 :
+			case 3000 :
 				return "WARN";
-			case 40000 :
+			case 2000 :
 				return "ERROR";
-			case 50000 :
+			case 1000 :
 				return "FATAL";
-			case 60000 :
+			case 0 :
 				return "OFF";
 		}
 		

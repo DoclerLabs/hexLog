@@ -10,16 +10,16 @@ class LogManager
 
 	static public inline var ROOT_LOGGER_NAME:String = "";
 	
-	public static var context:ILoggerContext = new LoggerContext();
+	static public var context:ILoggerContext = new LoggerContext();
 	
-	public static function getLoggerByClassInfo(classInfo:ClassInfo, ?messageFactory:IMessageFactory = null):ILogger
+	static public function getLoggerByClassInfo(classInfo:ClassInfo, ?messageFactory:IMessageFactory = null):ILogger
 	{
-		return getContextByClassInfo(classInfo).getLoggerByClassInfo(classInfo, messageFactory);
+		return getContext().getLoggerByClassInfo(classInfo, messageFactory);
 	}
 	
-	public static function getLogger(?name:String = "", ?messageFactory:IMessageFactory = null):ILogger
+	static public function getLogger(?name:String = "", ?messageFactory:IMessageFactory = null):ILogger
 	{
-		return getContext(name).getLogger(name, messageFactory);
+		return getContext().getLogger(name, messageFactory);
 	}
 	
 	static public function getRootLogger():ILogger
@@ -27,12 +27,12 @@ class LogManager
 		return getLogger(ROOT_LOGGER_NAME);
 	}
 	
-	static function getContextByClassInfo(classInfo:ClassInfo):ILoggerContext
+	static public function getContextByClassInfo(classInfo:ClassInfo):ILoggerContext
 	{
-		return context;
+		return getContext(classInfo.fqcn);
 	}
 	
-	static function getContext(name:String):ILoggerContext
+	static public function getContext(?name:String):ILoggerContext
 	{
 		return context;
 	}
