@@ -1,0 +1,14 @@
+{
+  "name": "hexlog",
+  "license": "MIT",
+  "classPath": "src",
+  "tags": ["hexmachina", "log", "oop"],
+  "description": "hexLog contains logging system written in Haxe",
+  "contributors": ["doclerlabs"],
+  "releasenote": "First release. Still alpha testing",
+  "version": "0.1.0",
+  "url": "https://github.com/DoclerLabs/hexLog",
+  "dependencies":
+  {
+  }
+}

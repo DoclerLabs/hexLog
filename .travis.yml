@@ -1,0 +1,53 @@
+sudo: required
+dist: trusty
+
+language: haxe
+
+# haxe versions : http://haxe.org/website-content/downloads/versions.json
+haxe:
+  - "3.2.1"
+  - "3.4.0"
+  - development
+
+matrix:
+  allow_failures:
+  - haxe: development
+
+before_install:
+  - echo $TRAVIS_BRANCH
+  - if [[ "$TRAVIS_BRANCH" != "master" ]]; then export DEPENDENCIES_BRANCH=develop; else export DEPENDENCIES_BRANCH=master; fi
+  - echo $TRAVIS_TAG
+  - if [[ "$TRAVIS_TAG" != "" ]]; then export DEPENDENCIES_BRANCH=$TRAVIS_TAG; fi
+  - echo $DEPENDENCIES_BRANCH
+  - sudo sed -i -e 's/deb http/deb [arch=amd64] http/' "/etc/apt/sources.list.d/google-chrome.list" "/opt/google/chrome/cron/google-chrome"
+  - sudo dpkg --add-architecture i386
+  - sudo apt-get update
+  - sudo apt-get install -qq libcurl3:i386
+  - sudo apt-get install -qq libglib2.0-0:i386
+  - sudo apt-get install -qq libx11-6:i386
+  - sudo apt-get install -qq libxext6:i386
+  - sudo apt-get install -qq libxt6:i386
+  - sudo apt-get install -qq libxcursor1:i386
+  - sudo apt-get install -qq libnss3:i386
+  - sudo apt-get install -qq libgtk2.0-0:i386
+
+install:
+  - git clone --recursive -b $DEPENDENCIES_BRANCH https://github.com/DoclerLabs/hexUnit.git ./hexunit
+  - haxelib dev hexunit ./hexunit
+  - haxelib dev hexlog ./hexlog
+  - export DISPLAY=:99.0;
+  - export AUDIODEV=null;
+  - haxe flash/install.hxml
+
+script:
+  - if [ $TRAVIS_HAXE_VERSION != "3.2.1" ]; then haxe build-php.hxml && php bin/index.php; fi
+  - if [ $TRAVIS_HAXE_VERSION != "3.2.1" ]; then haxe build-neko.hxml && neko bin/MainTest.n; fi
+  - haxe build-js.hxml           && node bin/MainTest.js
+  - if [ $TRAVIS_HAXE_VERSION != "3.2.1" ]; then haxe build-flash.hxml -D fdb && haxe flash/run.hxml bin/MainTest.swf; fi
+  
+notifications:
+  email:
+    recipients:
+      - francis_bourre@me.com
+      - peterphonix@gmail.com
+      - laurent@geturl.net
