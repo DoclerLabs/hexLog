@@ -4,7 +4,7 @@ package hex.log2;
  * ...
  * @author Francis Bourre
  */
-class LogLevel
+abstract LogLevel(Int)
 {
     static var _ALL 	= new LogLevel( 9999999 );
     static var _DEBUG 	= new LogLevel( 5000 );
@@ -62,20 +62,14 @@ class LogLevel
         return LogLevel._OFF;
     }
 
-    @:isVar public var value( get, null ) : Int;
-    function get_value() : Int
-    {
-        return this.value;
-    }
-
     public function new( value : Int )
     {
-        this.value = value;
+        this = value;
     }
 	
-	public function toString() : String
+	@:to public function toString() : String
 	{
-		switch( this.value )
+		switch( this )
 		{
 			case 9999999 :
 				return "ALL";
@@ -96,13 +90,28 @@ class LogLevel
 		return "";
 	}
 	
-	public function isMoreSpecificThan(level:LogLevel):Bool
+	@:to public function toInt():Int
 	{
-		return value <= level.value;
+		return this;
 	}
 	
+	@from public function fromInt(i:Int):LogLevel
+	{
+		return new LogLevel(i);
+	}
+	
+	@:op(A > B) static function gt( a:LogLevel, b:LogLevel ) : Bool;
+	@:op(A < B) static function lt( a:LogLevel, b:LogLevel ) : Bool;
+	
+	@:op(A <= B)
+	public function isMoreSpecificThan(level:LogLevel):Bool
+	{
+		return this <= level.toInt();
+	}
+	
+	@:op(A >= B)
 	public function isLessSpecificThan(level:LogLevel):Bool
 	{
-		return value >= level.value;
+		return this >= level.toInt();
 	}
 }

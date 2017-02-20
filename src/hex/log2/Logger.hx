@@ -102,7 +102,6 @@ class PrivateLoggerConfig
 	public var loggerConfig(default, null):LoggerConfig;
 	
 	var logger:Logger;
-	var intLevel:Int;
 
 	public static function fromPrivateConfig(pc:PrivateLoggerConfig, level:LogLevel):PrivateLoggerConfig
 	{
@@ -120,7 +119,6 @@ class PrivateLoggerConfig
 		this.config = configuration;
 		this.loggerConfig = configuration.getLoggerConfig(logger.getName());
 		this.loggerConfigLevel = level == null ? loggerConfig.level : level;
-		intLevel = loggerConfigLevel.value;
 	}
 
 	public function logEvent(event:LogEvent):Void
@@ -153,7 +151,7 @@ class PrivateLoggerConfig
 				return r == FilterResult.ACCEPT;
 			}
 		}
-		return level != null && intLevel >= level.value;
+		return level != null && loggerConfigLevel >= level;
 	}
 
 }

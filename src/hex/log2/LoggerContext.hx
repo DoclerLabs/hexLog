@@ -37,6 +37,7 @@ class LoggerContext implements ILoggerContext
 	
 	public function getLogger(name:String, ?messageFactory:IMessageFactory):ILogger
 	{
+		name = name == null ? "" : name;
 		if (!loggerRegistry.exists(name))
 		{
 			var logger = new Logger(this, name, messageFactory);

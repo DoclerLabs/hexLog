@@ -89,7 +89,7 @@ class LoggerConfig extends AbstractFilterable
 		var filtered = super.isFiltered(event);
 		if (!filtered && level != null)
 		{
-			return level.value < event.level.value;
+			return level < event.level;
 		}
 		return filtered;
 	}
@@ -117,14 +117,12 @@ class LogTargetControl extends AbstractFilterable
 	public var logTarget(default,null):ILogTarget;
 	public var logTargetName(default,null):String;
 	var level:LogLevel;
-	var intLevel:Int;
 	
 	public function new(logTarget:ILogTarget, level:LogLevel, filter:IFilter) 
 	{
 		super(filter);
 		this.filter = filter;
 		this.level = level;
-		this.intLevel = level == null ? LogLevel.ALL.value : level.value;
 		this.logTarget = logTarget;
 		this.logTargetName = logTarget.getName();
 	}
@@ -151,7 +149,7 @@ class LogTargetControl extends AbstractFilterable
 
     function isFilteredByLevel(event:LogEvent):Bool
 	{
-        return level != null && intLevel < event.level.value;
+        return level != null && level < event.level;
     }
 	
 }
