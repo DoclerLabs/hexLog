@@ -50,6 +50,16 @@ class LoggerContext implements ILoggerContext
 		return configuration;
 	}
 	
+	public function setConfiguration(newConfiguration:IConfiguration):Void
+	{
+		if (newConfiguration == null)
+		{
+			return;
+		}
+		configuration = newConfiguration;
+		updateLoggers();
+	}
+	
 	public function updateLoggers():Void 
 	{
 		for (logger in loggerRegistry)

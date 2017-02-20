@@ -11,9 +11,9 @@ import hex.log2.LogEvent;
  */
 class TraceLogTarget extends AbstractLogTarget
 {
-	override public function onLog( message : LogEvent ) : Void 
+	override function logInternal( message : LogEvent ) : Void 
 	{
-		Log.trace(getLayout().toString(message));
+		Log.trace(getLayout().toString(message), message.posInfos);
 	}
 	
 	public function onClear() : Void 

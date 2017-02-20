@@ -1,4 +1,6 @@
 package hex.log2.target;
+import hex.log2.filter.IFilter;
+import hex.log2.layout.ILayout;
 
 #if js
 import haxe.PosInfos;
@@ -23,9 +25,9 @@ class SimpleBrowseLogTarget extends AbstractLogTarget
 	var _domainDisplay	: Bool = true;
 	var _timeDisplay	: Bool = true;
 	
-	public function new( targetID : String = "console", leveldisplay : Bool = true, domainDisplay : Bool = true, timeDisplay : Bool = true ) 
+	public function new( name:String, filter:IFilter = null, layout:ILayout = null, targetID : String = "console", leveldisplay : Bool = true, domainDisplay : Bool = true, timeDisplay : Bool = true ) 
 	{
-		super(null, null);
+		super(name, filter, layout);
 		this._setConsole( targetID );
 		this.setDomainDisplay( domainDisplay );
 		this.setLevelDisplay( leveldisplay );
@@ -66,7 +68,7 @@ class SimpleBrowseLogTarget extends AbstractLogTarget
 		
 		if ( this._console == null )
 		{
-			throw new NullPointerException( "Div named '" + targetId + "' was not found in '" + Stringifier.stringify( this ) + "'" );
+			throw new NullPointerException( "Div named '" + targetId + "' was not found in '" + this + "'" );
 		}
 
 		this._console.style.whiteSpace 			= "pre";
@@ -74,18 +76,18 @@ class SimpleBrowseLogTarget extends AbstractLogTarget
 		this._console.style.fontSize 			= "11px";
 	}
 
-	override public function onLog( message : LogEvent ) : Void 
+	override function logInternal( event : LogEvent ) : Void 
 	{
-		var message : Dynamic = loggemessage.message;
-		var level : LogLevel = message.level;
-		var domain : Domain = message.domain;
-		var posInfos : PosInfos = message.posInfos;
+		var message : String = event.message.getFormattedMessage();
+		var level : LogLevel = event.level;
+		var eventDomain : Domain = event.domain;
+		var posInfos : PosInfos = event.posInfos;
 		
 		var leftBracket = this._createElement( "[", this._getStyle( level ) );
 		var rightBracket = this._createElement( "]", this._getStyle( level ) );
 		var time = this._createElement( this._getTime(), this._getStyle( level ) );
 		var levelName = this._createElement( level.toString(), this._getStyle( level ) + "+bold" );
-		var domainName : String = ( domain != null && domain.getName() != null ) ?  "@" + domain.getName() : "";
+		var domainName : String = ( eventDomain != null && eventDomain.getName() != null ) ?  "@" + eventDomain.getName() : "";
 		var domain = this._createElement( domainName, this._getStyle( level ) );
 		var message = this._createElement( "\t\t" + message, this._getStyle( level ) );
 		var info = this._createElement( posInfos != null ? " at " + posInfos.className + "::" + posInfos.methodName + " line " + posInfos.lineNumber + " in file " + posInfos.fileName : "", this._getStyle( level ) );

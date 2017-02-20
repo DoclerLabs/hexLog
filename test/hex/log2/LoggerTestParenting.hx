@@ -1,11 +1,6 @@
 package hex.log2;
 import hex.log2.configuration.IConfiguration;
-import hex.log2.filter.IFilter;
-import hex.log2.layout.ILayout;
-import hex.log2.LogEvent;
-import hex.log2.helper.TestLoggerContext;
-import hex.log2.target.AbstractLogTarget;
-import hex.log2.target.ILogTarget;
+import hex.log2.helper.TestLogTarget;
 import hex.unittest.assertion.Assert;
 
 /**
@@ -171,24 +166,6 @@ class LoggerTestParenting
 		Assert.equals(LogLevel.ALL, loggerConfig.level, "Levels must be the same");
 		var localLogger = LogManager.getLogger("LoggerTest");
 		Assert.equals(LogLevel.ALL, localLogger.getLevel(), "Levels of local logger must be inherited");
-	}
-	
-}
-
-class TestLogTarget extends AbstractLogTarget
-{
-	
-	public var messages(default, null):List<LogEvent>;
-	
-	public function new(name:String, filter:IFilter, layout:ILayout) 
-	{
-		super(name, filter, layout);
-		messages = new List<LogEvent>();
-	}
-	
-	override public function onLog(message:LogEvent):Void 
-	{
-		messages.add(message);
 	}
 	
 }

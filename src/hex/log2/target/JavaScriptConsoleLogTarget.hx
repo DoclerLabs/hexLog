@@ -14,7 +14,7 @@ import js.Browser;
 class JavaScriptConsoleLogTarget extends AbstractLogTarget
 {
 	
-	override public function onLog(message:LogEvent):Void 
+	override function logInternal(message:LogEvent):Void 
 	{
 		var m : haxe.extern.Rest<Dynamic>->Void;
 		

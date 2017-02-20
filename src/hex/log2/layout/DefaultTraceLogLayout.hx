@@ -10,7 +10,8 @@ class DefaultTraceLogLayout extends AbstractLayout implements ILayout
 	
 	public function toString(message:LogEvent):String 
 	{
-		return ">>> " + message.level + ":" + message.message + " [" + message.domain.getName() + "]" + info + " " + formatPosInfos(message);
+		var domain = message.domain == null ? "" : " [" + message.domain.getName() + "]";
+		return ">>> " + message.level + ":" + message.message.getFormattedMessage() + domain;//+ " " + formatPosInfos(message);
 	}
 	
 }

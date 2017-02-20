@@ -1,5 +1,6 @@
 package hex.log2.target;
 import hex.log2.LogEvent;
+import hex.log2.filter.AbstractFilterable;
 import hex.log2.filter.IFilter;
 import hex.log2.layout.ILayout;
 
@@ -7,22 +8,29 @@ import hex.log2.layout.ILayout;
  * ...
  * @author ...
  */
-class AbstractLogTarget implements ILogTarget
+class AbstractLogTarget extends AbstractFilterable implements ILogTarget
 {
-	var filter:IFilter;
 	var layout:ILayout;
 	var name:String;
 
 	public function new(name:String, filter:IFilter, layout:ILayout) 
 	{
+		super(filter);
 		this.name = name;
 		this.layout = layout;
-		this.filter = filter;
 	}
 	
 	public function onLog(message:LogEvent):Void 
 	{
-		throw "onLog must be implemented!";
+		if (!isFiltered(message))
+		{
+			logInternal(message);
+		}
+	}
+	
+	function logInternal(message:LogEvent) 
+	{
+		throw "logInternal must be implemented!";
 	}
 	
 	public function getLayout():ILayout 
