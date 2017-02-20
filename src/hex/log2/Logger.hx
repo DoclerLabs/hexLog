@@ -76,7 +76,7 @@ class Logger extends AbstractLogger
 		privateConfig = PrivateLoggerConfig.fromConfiguration(config, this);
 	}
 	
-	public function setLevel(level:LogLevel):Void
+	public function setLevel(level:Null<LogLevel>):Void
 	{
 		if (level == getLevel())
 		{
@@ -113,7 +113,7 @@ class PrivateLoggerConfig
 		return new PrivateLoggerConfig(configuration, logger);
 	}
 	
-	public function new(configuration:IConfiguration, logger:Logger, ?level:LogLevel)
+	public function new(configuration:IConfiguration, logger:Logger, ?level:Null<LogLevel>)
 	{
 		this.logger = logger;
 		this.config = configuration;
@@ -151,7 +151,7 @@ class PrivateLoggerConfig
 				return r == FilterResult.ACCEPT;
 			}
 		}
-		return level != null && loggerConfigLevel >= level;
+		return loggerConfigLevel >= level;
 	}
 
 }

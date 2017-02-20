@@ -18,19 +18,19 @@ class JavaScriptConsoleLogTarget extends AbstractLogTarget
 	{
 		var m : haxe.extern.Rest<Dynamic>->Void;
 		
-		if ( message.level.value == LogLevel.DEBUG.value )
+		if ( message.level == LogLevel.DEBUG )
 		{
 			m = Browser.console.debug;
 		}
-		else if ( message.level.value == LogLevel.INFO.value )
+		else if ( message.level == LogLevel.INFO )
 		{
 			m = Browser.console.info;
 		}
-		else if ( message.level.value == LogLevel.WARN.value )
+		else if ( message.level == LogLevel.WARN )
 		{
 			m = Browser.console.warn;
 		}
-		else if ( message.level.value == LogLevel.FATAL.value || message.level.value == LogLevel.ERROR.value)
+		else if ( message.level == LogLevel.FATAL || message.level == LogLevel.ERROR)
 		{
 			m = Browser.console.error;
 				

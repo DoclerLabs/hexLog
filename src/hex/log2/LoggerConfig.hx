@@ -14,13 +14,13 @@ import hex.log2.target.ILogTarget;
 class LoggerConfig extends AbstractFilterable
 {
 	public var name(default, null):String;
-	@:isVar public var level(get, set):LogLevel;
+	@:isVar public var level(get, set):Null<LogLevel>;
 	public var parent(default, default):LoggerConfig;
 	var logTargets:Array<LogTargetControl>;
 	var config:IConfiguration;
 	var additive:Bool = true;
 	
-	public function new(name:String = null, logLevel:LogLevel = null, config:IConfiguration = null) 
+	public function new(name:String = null, logLevel:Null<LogLevel> = null, config:IConfiguration = null) 
 	{
 		super();
 		this.config = config;
@@ -39,7 +39,7 @@ class LoggerConfig extends AbstractFilterable
 		return level == null ? parent.level : level;
 	}
 	
-	public function addLogTarget(logTarget:ILogTarget, level:LogLevel, filter:IFilter):Void
+	public function addLogTarget(logTarget:ILogTarget, level:Null<LogLevel>, filter:IFilter):Void
 	{
 		logTargets.push(new LogTargetControl(logTarget, level, filter));
 	}
@@ -105,7 +105,7 @@ class LoggerConfig extends AbstractFilterable
 
 class RootLogger extends LoggerConfig
 {
-	public static function createLogger(?level:LogLevel):LoggerConfig
+	public static function createLogger(?level:Null<LogLevel>):LoggerConfig
 	{
 		var actualLevel:LogLevel = level == null ? LogLevel.ERROR : level;
 		return new LoggerConfig("", actualLevel);
@@ -116,9 +116,9 @@ class LogTargetControl extends AbstractFilterable
 {
 	public var logTarget(default,null):ILogTarget;
 	public var logTargetName(default,null):String;
-	var level:LogLevel;
+	var level:Null<LogLevel>;
 	
-	public function new(logTarget:ILogTarget, level:LogLevel, filter:IFilter) 
+	public function new(logTarget:ILogTarget, level:Null<LogLevel>, filter:IFilter) 
 	{
 		super(filter);
 		this.filter = filter;
