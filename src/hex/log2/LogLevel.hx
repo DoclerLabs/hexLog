@@ -95,7 +95,7 @@ abstract LogLevel(Int)
 		return this;
 	}
 	
-	@from public function fromInt(i:Int):LogLevel
+	@from public static function fromInt(i:Int):LogLevel
 	{
 		return new LogLevel(i);
 	}

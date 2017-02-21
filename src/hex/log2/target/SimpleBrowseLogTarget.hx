@@ -86,7 +86,7 @@ class SimpleBrowseLogTarget extends AbstractLogTarget
 		var leftBracket = this._createElement( "[", this._getStyle( level ) );
 		var rightBracket = this._createElement( "]", this._getStyle( level ) );
 		var time = this._createElement( this._getTime(), this._getStyle( level ) );
-		var levelName = this._createElement( level.toString(), this._getStyle( level ) + "+bold" );
+		var levelName = this._createElement( event.level.toString(), this._getStyle( level ) + "+bold" );
 		var domainName : String = ( eventDomain != null && eventDomain.getName() != null ) ?  "@" + eventDomain.getName() : "";
 		var domain = this._createElement( domainName, this._getStyle( level ) );
 		var message = this._createElement( "\t\t" + message, this._getStyle( level ) );
@@ -105,7 +105,7 @@ class SimpleBrowseLogTarget extends AbstractLogTarget
 		return "" + Date.now().getTime();
 	}
 	
-	function _getStyle( level : LogLevel ) : String
+	function _getStyle( level : Int ) : String
 	{
 		return this._levelStyle.get( level );
 	}
