@@ -19,7 +19,7 @@ import js.html.SpanElement;
 class SimpleBrowseLogTarget extends AbstractLogTarget
 {
 	var _console 		: Element;
-	var _levelStyle		: Map<LogLevel, String>;
+	var _levelStyle		: Map<Int, String>;
 	
 	var _levelDisplay	: Bool = true;
 	var _domainDisplay	: Bool = true;
@@ -79,7 +79,7 @@ class SimpleBrowseLogTarget extends AbstractLogTarget
 	override function logInternal( event : LogEvent ) : Void 
 	{
 		var message : String = event.message.getFormattedMessage();
-		var level : LogLevel = event.level;
+		var level : Int = event.level;
 		var eventDomain : Domain = event.domain;
 		var posInfos : PosInfos = event.posInfos;
 		
