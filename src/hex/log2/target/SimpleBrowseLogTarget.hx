@@ -80,19 +80,19 @@ class SimpleBrowseLogTarget extends AbstractLogTarget
 	{
 		var message : String = event.message.getFormattedMessage();
 		var level : Int = event.level;
-		var eventDomain : Domain = event.domain;
+		//var eventDomain : Domain = event.domain;
 		var posInfos : PosInfos = event.posInfos;
 		
 		var leftBracket = this._createElement( "[", this._getStyle( level ) );
 		var rightBracket = this._createElement( "]", this._getStyle( level ) );
 		var time = this._createElement( this._getTime(), this._getStyle( level ) );
 		var levelName = this._createElement( event.level.toString(), this._getStyle( level ) + "+bold" );
-		var domainName : String = ( eventDomain != null && eventDomain.getName() != null ) ?  "@" + eventDomain.getName() : "";
-		var domain = this._createElement( domainName, this._getStyle( level ) );
+		//var domainName : String = ( eventDomain != null && eventDomain.getName() != null ) ?  "@" + eventDomain.getName() : "";
+		//var domain = this._createElement( domainName, this._getStyle( level ) );
 		var message = this._createElement( "\t\t" + message, this._getStyle( level ) );
 		var info = this._createElement( posInfos != null ? " at " + posInfos.className + "::" + posInfos.methodName + " line " + posInfos.lineNumber + " in file " + posInfos.fileName : "", this._getStyle( level ) );
 		
-		this._log( this._getEncapsulateElements( [ leftBracket, levelName, domain, rightBracket, message, info] ) );
+		this._log( this._getEncapsulateElements( [ leftBracket, levelName, rightBracket, message, info] ) );
 	}
 	
 	public function onClear() : Void 

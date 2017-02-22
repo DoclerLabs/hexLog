@@ -11,8 +11,8 @@ class DefaultJavascriptConsoleLogLayout extends AbstractLayout implements ILayou
 
 	public function toString(message:LogEvent):String 
 	{
-		var domain = message.domain == null ? "" : " [" + message.domain.getName() + "]";
-		return message.message.getFormattedMessage() + domain + " " + formatPosInfos(message);
+		//var domain = message.domain == null ? "" : " [" + message.domain.getName() + "]";
+		return message.message.getFormattedMessage() + " " + formatPosInfos(message);
 	}
 	
 }

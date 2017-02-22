@@ -1,8 +1,6 @@
 package hex.log2;
 
 import haxe.PosInfos;
-import hex.domain.Domain;
-import hex.event.MessageType;
 import hex.log2.message.IMessage;
 
 /**
@@ -11,16 +9,16 @@ import hex.log2.message.IMessage;
  */
 class LogEvent
 {
-	public var message 	: IMessage;
-	public var level 	: LogLevel;
-	public var domain 	: Domain;
-	public var posInfos : PosInfos;
-	
-	public function new( message : IMessage, level : LogLevel, ?domain : Domain, ?posInfos : PosInfos ) 
+	public var message:IMessage;
+	public var level:LogLevel;
+	public var posInfos:PosInfos;
+	public var logger:ILogger;
+
+	public function new( logger:ILogger, message : IMessage, level : LogLevel, ?posInfos : PosInfos )
 	{
-		this.message 	= message;
-		this.level 		= level;
-		this.domain 	= domain;
-		this.posInfos 	= posInfos;
+		this.logger = logger;
+		this.message = message;
+		this.level = level;
+		this.posInfos = posInfos;
 	}
 }

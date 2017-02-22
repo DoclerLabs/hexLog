@@ -20,8 +20,8 @@ class ThresholdFilterTest
 		Assert.equals(FilterResult.NEUTRAL, filter.filter(null, LogLevel.ERROR, null, null));
 		
 		//filter event
-		Assert.equals(FilterResult.DENY, filter.filterEvent(new LogEvent(null, LogLevel.DEBUG)));
-		Assert.equals(FilterResult.NEUTRAL, filter.filterEvent(new LogEvent(null, LogLevel.ERROR)));
+		Assert.equals(FilterResult.DENY, filter.filterEvent(new LogEvent(null, null, LogLevel.DEBUG)));
+		Assert.equals(FilterResult.NEUTRAL, filter.filterEvent(new LogEvent(null, null, LogLevel.ERROR)));
 		
 		//filter message
 		Assert.equals(FilterResult.DENY, filter.filterMessage(null, LogLevel.DEBUG, null));

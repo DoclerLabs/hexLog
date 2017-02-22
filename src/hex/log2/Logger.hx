@@ -43,7 +43,7 @@ class Logger extends AbstractLogger
 	
 	override public function logEnabledMessage(level:LogLevel, message:IMessage, ?posInfos:PosInfos):Void 
 	{
-		privateConfig.logEvent(new LogEvent(message, level, null, posInfos));
+		privateConfig.logEvent(new LogEvent(this, message, level, posInfos));
 	}
 	
 	override public function getLevel():LogLevel 
