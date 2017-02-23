@@ -25,9 +25,9 @@ class SimpleBrowseLogTarget extends AbstractLogTarget
 	var _domainDisplay	: Bool = true;
 	var _timeDisplay	: Bool = true;
 	
-	public function new( name:String, filter:IFilter = null, layout:ILayout = null, targetID : String = "console", leveldisplay : Bool = true, domainDisplay : Bool = true, timeDisplay : Bool = true ) 
+	public function new( name:String, filter:IFilter = null, targetID : String = "console", leveldisplay : Bool = true, domainDisplay : Bool = true, timeDisplay : Bool = true ) 
 	{
-		super(name, filter, layout);
+		super(name, filter, null);
 		this._setConsole( targetID );
 		this.setDomainDisplay( domainDisplay );
 		this.setLevelDisplay( leveldisplay );
