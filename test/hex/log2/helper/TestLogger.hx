@@ -1,19 +1,20 @@
 package hex.log2.helper;
 import haxe.PosInfos;
 import hex.log2.LogLevel;
+import hex.log2.LoggerContext;
 import hex.log2.internal.AbstractLogger;
 import hex.log2.message.IMessage;
 import hex.log2.message.IMessageFactory;
 import hex.log2.message.ParameterizedMessageFactory;
 
-class TestLogger extends AbstractLogger
+class TestLogger extends Logger
 {
-	var name:String;
+	
 	public var entries(default, null):List<String>;
 	
-	public function new(name:String, messageFactory:IMessageFactory) 
+	public function new(context:LoggerContext, name:String, messageFactory:IMessageFactory) 
 	{
-		super(messageFactory == null ? ParameterizedMessageFactory.instance : messageFactory);
+		super(context, name, messageFactory == null ? ParameterizedMessageFactory.instance : messageFactory);
 		this.name = name;
 		entries = new List<String>();
 	}
@@ -50,8 +51,4 @@ class TestLogger extends AbstractLogger
 		return LogLevel.ALL;
 	}
 	
-	override public function getName():String 
-	{
-		return name;
-	}
 }
