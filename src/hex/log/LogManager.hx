@@ -34,6 +34,10 @@ class LogManager
 	
 	static public function getContext(?name:String):ILoggerContext
 	{
+		if (context == null)
+		{
+			context = new LoggerContext();
+		}
 		return context;
 	}
 	

@@ -52,7 +52,7 @@ class HexLog
 	
 	static function getLoggerCall():Expr
 	{
-		return macro LogManager.getLogger($v{getLoggerName()});
+		return macro hex.log.LogManager.getLogger($v{getLoggerName()});
 	}
 	
 	#end

@@ -11,8 +11,8 @@ import hex.log.message.IMessageFactory;
 class LoggerContext implements ILoggerContext
 {
 
-	var configuration:IConfiguration = new BasicConfiguration();
-	var loggerRegistry:Map<String,Logger> = new Map<String,Logger>();
+	var configuration:IConfiguration;
+	var loggerRegistry:Map<String,Logger>;
 	
 	public static function getContext():LoggerContext
 	{
@@ -21,6 +21,8 @@ class LoggerContext implements ILoggerContext
 	
 	public function new() 
 	{
+		configuration = new BasicConfiguration();
+		loggerRegistry = new Map<String,Logger>();
 	}
 	
 	public function getLoggerByClassInfo(classInfo:ClassInfo, ?messageFactory:IMessageFactory):ILogger
