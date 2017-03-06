@@ -19,27 +19,27 @@ class HexLog
 	
 	public static macro function debug(message:ExprOf<Dynamic>, ?params:ExprOf<Array<Dynamic>>):ExprOf<Void>
 	{
-		return macro ${getLoggerCall()}.debug($message, $params);
+		return macro @:pos(message.pos) ${getLoggerCall()}.debug($message, $params);
 	}
 	
 	public static macro function info(message:ExprOf<String>, ?params:ExprOf<Array<Dynamic>>):ExprOf<Void>
 	{
-		return macro ${getLoggerCall()}.info($message, $params);
+		return macro @:pos(message.pos) ${getLoggerCall()}.info($message, $params);
 	}
 	
 	public static macro function warn(message:ExprOf<String>, ?params:ExprOf<Array<Dynamic>>):ExprOf<Void>
 	{
-		return macro ${getLoggerCall()}.warn($message, $params);
+		return macro @:pos(message.pos) ${getLoggerCall()}.warn($message, $params);
 	}
 	
 	public static macro function error(message:ExprOf<String>, ?params:ExprOf<Array<Dynamic>>):ExprOf<Void>
 	{
-		return macro ${getLoggerCall()}.error($message, $params);
+		return macro @:pos(message.pos) ${getLoggerCall()}.error($message, $params);
 	}
 	
 	public static macro function fatal(message:ExprOf<String>, ?params:ExprOf<Array<Dynamic>>):ExprOf<Void>
 	{
-		return macro ${getLoggerCall()}.fatal($message, $params);
+		return macro @:pos(message.pos) ${getLoggerCall()}.fatal($message, $params);
 	}
 	
 	#if macro
