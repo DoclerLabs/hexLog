@@ -64,25 +64,25 @@ In addition to automatic LogLevel filtering hexLog provides Filters that can be 
 - after control is passed to a LoggerConfig but before calling **a specific** LogTarget
 - on each LogTarget
 
-[More information about filters and filtering](src/hex/log2/filter/README.md)
+[More information about filters and filtering](src/hex/log/filter/README.md)
 
 ### LogTarget
 
 The ability to selectively enable or disable logging requests based on their logger is only part of the picture. hexLog allows logging requests to be printed to multiple destinations. In hexLog speak, an output destination is called LogTarget.
 
-[More information about log targets](src/hex/log2/target/README.md)
+[More information about log targets](src/hex/log/target/README.md)
 
 ### Layout
 
 More often than not, users wish to customize not only the output destination but also the output format. This is accomplished by associating a Layout with a LogTarget. The Layout is responsible for formatting the LogEvent to the user's wishes, whereas a log target takes care of sending the formatted output to its destination.
 
-[More information about layouts](src/hex/log2/layout/README.md)
+[More information about layouts](src/hex/log/layout/README.md)
 
 ### Message
 
 Internally in the system every log statement is represented by a Message object.
 
-[More information about messages](src/hex/log2/message/README.md)
+[More information about messages](src/hex/log/message/README.md)
 
 # Simple examples
 
