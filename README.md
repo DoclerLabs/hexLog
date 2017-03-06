@@ -4,6 +4,10 @@ hexLog contains logging system inspired by log4j written in Haxe
 
 *Find more information about hexMachina on [hexmachina.org](http://hexmachina.org/)*
 
+## Dependencies
+
+* [hexCore](https://github.com/DoclerLabs/hexCore)
+
 # Architecture
 
 ## Main components
