@@ -52,6 +52,8 @@ Configuration of the hexLog environment is always done at application initializa
 
 hexLog makes it easy to name Loggers by *software component*. This can be accomplished by instantiating Logger in each class, with the Logger name equal to the fully qualified name of the class. This is a useful and straightforward method of defining loggers. As the log output bears the name of the generating Logger, this naming strategy makes it easy to identify the origin of the log message. However this is only one possible strategy of naming loggers and hexLog does not restrict the possible set of loggers. The developer is always free to name the loggers as desired.
 
+For convenience hexLog provides a set of functions which you can import to generate `getLogger` calls automatically. It's especially handy when using `import.hx` file. ([See example](#using-convenience-hexlog-class))
+
 ### LoggerConfig
 
 LoggerConfig objects are created when Loggers are declared in the logging configuration. The LoggerConfig contains set of Filters that must allow the LogEvent to pass before it will be passed to any LogTargets. It also contains reference to the set of LogTargets that should be used to process the event.
@@ -98,6 +100,33 @@ logger.debug("Some message");
 // Logging message with parameters
 var name = "World";
 logger.debug("Hello {}", [name]);
+```
+
+## Using convenience `HexLog` class
+
+If you're planning to log extensively it's a good practice to first get looger fro your class and then use it to send your messages
+```haxe
+import hex.log.HexLog.*; // Import all convenience functions
+
+// If you're planning to use logger extensively, first get logger for your class
+var logger = getLogger();
+// Gets replaced with:
+//var logger = hex.log.LogManager.getLogger("my.current.class");
+logger.debug("Hello world!"); // you can now use logger as usual
+```
+If you just need a simple debug statement and you're not worried about performance you can use even more abstracted functions.
+```haxe
+import hex.log.HexLog.*; // Import all convenience functions
+
+debug("Hello world");
+info("Hello world");
+warn("Hello world");
+error("Hello world");
+fatal("Hello world");
+
+// Gets replaced with:
+//hex.log.LogManager.getLogger("my.current.class").debug("Hello world");
+// ... etc
 ```
 
 ## Configuration
