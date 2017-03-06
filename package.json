@@ -1,0 +1,31 @@
+{
+  "name": "hexlog",
+  "version": "1.0.0",
+  "description": "hexLog contains logging system written in Haxe",
+  
+  "directories": {
+    "src": "src",
+	"test": "test" 
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DoclerLabs/hexLog.git"
+  },
+  "keywords": [
+    "haxe",
+    "log",
+    "hexmachina"
+  ],
+  "author": "DoclerLabs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DoclerLabs/hexLog/issues"
+  },
+  "homepage": "https://github.com/DoclerLabs/hexLog#readme",
+
+  "devDependencies": {
+  }
+}
