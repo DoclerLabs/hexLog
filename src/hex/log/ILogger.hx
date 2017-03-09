@@ -2,7 +2,6 @@ package hex.log;
 import hex.log.message.IMessage;
 
 import haxe.PosInfos;
-import hex.domain.Domain;
 import hex.log.LogLevel;
 
 /**

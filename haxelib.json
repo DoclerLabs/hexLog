@@ -10,6 +10,5 @@
   "url": "https://github.com/DoclerLabs/hexLog",
   "dependencies":
   {
-	"hexcore": "git:https://github.com/DoclerLabs/hexCore.git"
   }
 }
