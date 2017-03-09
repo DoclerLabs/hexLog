@@ -4,8 +4,7 @@ import hex.log.layout.ILayout;
 
 #if js
 import haxe.PosInfos;
-import hex.domain.Domain;
-import hex.error.NullPointerException;
+//import hex.domain.Domain;
 import hex.log.LogLevel;
 import hex.log.LogEvent;
 import js.Browser;
@@ -68,7 +67,7 @@ class SimpleBrowseLogTarget extends AbstractLogTarget
 		
 		if ( this._console == null )
 		{
-			throw new NullPointerException( "Div named '" + targetId + "' was not found in '" + this + "'" );
+			throw "Div named '" + targetId + "' was not found in '" + this + "'";
 		}
 
 		this._console.style.whiteSpace 			= "pre";
