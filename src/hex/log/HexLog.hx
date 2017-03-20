@@ -44,13 +44,13 @@ class HexLog
 	
 	#if macro
 	
-	static function getLoggerName():String
+	public static function getLoggerName():String
 	{
 		var ct = Context.getLocalClass().get();
 		return (ct.pack.length > 0 ? ct.pack.join(".") + "." : "") + ct.name;
 	}
 	
-	static function getLoggerCall():Expr
+	public static function getLoggerCall():Expr
 	{
 		return macro hex.log.LogManager.getLogger($v{getLoggerName()});
 	}
