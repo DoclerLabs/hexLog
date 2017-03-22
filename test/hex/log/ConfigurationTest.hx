@@ -20,6 +20,7 @@ class ConfigurationTest
 	@Before
 	public function setup()
 	{
+		LogManager.context = new LoggerContext();
 	}
 	
 	
