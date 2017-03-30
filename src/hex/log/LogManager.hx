@@ -17,6 +17,26 @@ class LogManager
 		return getContext().getLoggerByClassInfo(classInfo, messageFactory);
 	}
 	
+	static public function getLoggerByInstance<T>(target:T, ?messageFactory:IMessageFactory = null):ILogger
+	{
+		if (target == null)
+		{
+			return getLogger("", messageFactory);
+		}
+		var type = Type.getClassName( Type.getClass( target ) );
+		return getLogger(type != null ? type : "Dynamic", messageFactory);
+	}
+	
+	static public function getLoggerByClass(clss:Class<Dynamic>, ?messageFactory:IMessageFactory = null):ILogger
+	{
+		if (clss == null)
+		{
+			return getLogger("", messageFactory);
+		}
+		var type = Type.getClassName( clss );
+		return getLogger(type != null ? type : "Dynamic", messageFactory);
+	}
+	
 	static public function getLogger(?name:String = "", ?messageFactory:IMessageFactory = null):ILogger
 	{
 		return getContext().getLogger(name, messageFactory);

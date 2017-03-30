@@ -54,6 +54,8 @@ hexLog makes it easy to name Loggers by *software component*. This can be accomp
 
 For convenience hexLog provides a set of functions which you can import to generate `getLogger` calls automatically. It's especially handy when using `import.hx` file. ([See example](#using-convenience-hexlog-class))
 
+Additional convenience methods are `getLoggerByClass` and `getLoggerByInstance` which are useful in macro context where you can't use HexLog convenience class.
+
 ### LoggerConfig
 
 LoggerConfig objects are created when Loggers are declared in the logging configuration. The LoggerConfig contains set of Filters that must allow the LogEvent to pass before it will be passed to any LogTargets. It also contains reference to the set of LogTargets that should be used to process the event.

@@ -6,7 +6,7 @@ package hex.log;
  */
 abstract LogLevel(Int)
 {
-    static var _ALL 	= new LogLevel( 9999999 );
+    static var _ALL 	= new LogLevel( 999999 );
     static var _DEBUG 	= new LogLevel( 5000 );
     static var _INFO 	= new LogLevel( 4000 );
     static var _WARN 	= new LogLevel( 3000 );
@@ -69,10 +69,9 @@ abstract LogLevel(Int)
 	
 	@:to public function toString() : String
 	{
-		#if !macro
 		return switch( this )
 		{
-			case 9999999 : "ALL";
+			case 999999 : "ALL";
 			case 5000 : "DEBUG";
 			case 4000 : "INFO";
 			case 3000 : "WARN";
@@ -81,8 +80,6 @@ abstract LogLevel(Int)
 			case 0 : "OFF";
 			case _: Std.string(this);
 		}
-		#end
-		return Std.string(this);
 	}
 	
 	@:to public function toInt():Int
