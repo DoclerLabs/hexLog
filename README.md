@@ -27,7 +27,9 @@ All other Loggers can be retrieved by using the `Logmanager.getLogger` static me
 
 ### LoggerContext
 
-The LoggerContext acts as the anchor point of the logging system. Currently it's not possible to have multiple LoggerContexts but you can change the LoggerContext implementation by changing the value of a static property `LogManager.context`
+The LoggerContext acts as the anchor point of the logging system. Currently it's not possible to have multiple LoggerContexts but you can change the LoggerContext implementation by changing the value of a static property `LogManager.context`.
+
+In case you would like to use logging within the macro context you can use already prepared `MacroLoggerContext` which has preconfigured message factory and messages designed specifically for printing expressions.
 
 ### Configuration
 
@@ -134,7 +136,7 @@ fatal("Hello world");
 ## Configuration
 
 ```haxe
-// -- You can see this working in hex.log2.ConfigurationTest.hx
+// -- You can see this working in hex.log.ConfigurationTest.hx
 
 // Create a new configuration
 var configuration = new BasicConfiguration();
