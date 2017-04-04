@@ -8,3 +8,7 @@ More often than not, users wish to customize not only the output destination but
 ### AbstractLayout
 
 Every layout should extend this class which currently provides `haxe.PosInfos` formatting.
+
+### MacroLogLayout
+
+Differentiates between ExpressionMessage and every other message where for expressions it doesn't print any additional information except the expression itself. Particularly useful in macro context.
