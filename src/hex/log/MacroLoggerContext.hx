@@ -1,4 +1,6 @@
 package hex.log;
+import hex.log.ILoggerContext;
+import hex.log.ILogger;
 
 #if macro
 import hex.log.configuration.MacroConfiguration;
@@ -14,19 +16,13 @@ class MacroLoggerContext extends LoggerContext
 		configuration = new MacroConfiguration();
 	}
 	
-	override public function getLogger(name:String, ?messageFactory:IMessageFactory):ILogger 
+	override function newInstance(context:LoggerContext, name:String, messageFactory:IMessageFactory):Logger 
 	{
-		name = name == null ? "" : name;
-		if (!loggerRegistry.exists(name))
+		if (messageFactory == null)
 		{
-			if (messageFactory == null)
-			{
-				messageFactory = ExpressionMessageFactory.instance;
-			}
-			var logger = new Logger(this, name, messageFactory);
-			loggerRegistry.set(name, logger);
+			messageFactory = ExpressionMessageFactory.instance;
 		}
-		return loggerRegistry.get(name);
+		return super.newInstance(context, name, messageFactory);
 	}
 }
 
