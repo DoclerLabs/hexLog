@@ -5,13 +5,14 @@ import hex.log.LogEvent;
  * ...
  * @author ...
  */
-class DefaultTraceLogLayout extends AbstractLayout implements ILayout
+class DefaultTraceLogLayout implements ILayout
 {
+	
+	public function new() {}
 	
 	public function toString(message:LogEvent):String 
 	{
-		//var domain = message.domain == null ? "" : " [" + message.domain.getName() + "]";
-		return ">>> " + message.level + ":" + message.message.getFormattedMessage();//+ " " + formatPosInfos(message);
+		return "[" + message.logger.getName() + "] " + message.level + ":" + message.message.getFormattedMessage();
 	}
 	
 }

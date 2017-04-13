@@ -93,6 +93,11 @@ class Logger extends AbstractLogger
 		}
 		privateConfig = PrivateLoggerConfig.fromPrivateConfig(privateConfig, actualLevel);
 	}
+	
+	public function toString():String 
+	{
+		return "[Logger] " + name;
+	}
 }
 
 class PrivateLoggerConfig

@@ -42,7 +42,7 @@ class LoggerContext implements ILoggerContext
 		name = name == null ? "" : name;
 		if (!loggerRegistry.exists(name))
 		{
-			var logger = new Logger(this, name, messageFactory);
+			var logger = newInstance(this, name, messageFactory);
 			loggerRegistry.set(name, logger);
 		}
 		return loggerRegistry.get(name);
@@ -69,6 +69,11 @@ class LoggerContext implements ILoggerContext
 		{
 			logger.updateConfiguration(configuration);
 		}
+	}
+	
+	function newInstance(context:LoggerContext, name:String, messageFactory:IMessageFactory):Logger
+	{
+		return new Logger(context, name, messageFactory);
 	}
 	
 }
