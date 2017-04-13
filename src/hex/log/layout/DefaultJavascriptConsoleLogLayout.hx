@@ -1,5 +1,4 @@
 package hex.log.layout;
-import haxe.PosInfos;
 import hex.log.LogEvent;
 
 /**
@@ -11,7 +10,7 @@ class DefaultJavascriptConsoleLogLayout extends AbstractLayout implements ILayou
 
 	public function toString(message:LogEvent):String 
 	{
-		return "[" + message.logger.getName() + "] " message.message.getFormattedMessage() + " " + formatPosInfos(message);
+		return "[" + message.logger.getName() + "] " + message.message.getFormattedMessage() + " " + formatPosInfos(message);
 	}
 	
 }
