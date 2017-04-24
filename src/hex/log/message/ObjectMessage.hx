@@ -18,7 +18,7 @@ class ObjectMessage implements IMessage
 	{
 		if (objString == null)
 		{
-			objString = obj + ""; //TODO: make this better
+			objString = Std.string(obj); //TODO: make this better
 		}
 		return objString;
 	}

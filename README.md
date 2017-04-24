@@ -27,7 +27,9 @@ All other Loggers can be retrieved by using the `Logmanager.getLogger` static me
 
 ### LoggerContext
 
-The LoggerContext acts as the anchor point of the logging system. Currently it's not possible to have multiple LoggerContexts but you can change the LoggerContext implementation by changing the value of a static property `LogManager.context`
+The LoggerContext acts as the anchor point of the logging system. Currently it's not possible to have multiple LoggerContexts but you can change the LoggerContext implementation by changing the value of a static property `LogManager.context`.
+
+In case you would like to use logging within the macro context you can use already prepared `MacroLoggerContext` which has preconfigured message factory and messages designed specifically for printing expressions.
 
 ### Configuration
 
@@ -53,6 +55,8 @@ Configuration of the hexLog environment is always done at application initializa
 hexLog makes it easy to name Loggers by *software component*. This can be accomplished by instantiating Logger in each class, with the Logger name equal to the fully qualified name of the class. This is a useful and straightforward method of defining loggers. As the log output bears the name of the generating Logger, this naming strategy makes it easy to identify the origin of the log message. However this is only one possible strategy of naming loggers and hexLog does not restrict the possible set of loggers. The developer is always free to name the loggers as desired.
 
 For convenience hexLog provides a set of functions which you can import to generate `getLogger` calls automatically. It's especially handy when using `import.hx` file. ([See example](#using-convenience-hexlog-class))
+
+Additional convenience methods are `getLoggerByClass` and `getLoggerByInstance` which are useful in macro context where you can't use HexLog convenience class.
 
 ### LoggerConfig
 
@@ -132,7 +136,7 @@ fatal("Hello world");
 ## Configuration
 
 ```haxe
-// -- You can see this working in hex.log2.ConfigurationTest.hx
+// -- You can see this working in hex.log.ConfigurationTest.hx
 
 // Create a new configuration
 var configuration = new BasicConfiguration();
