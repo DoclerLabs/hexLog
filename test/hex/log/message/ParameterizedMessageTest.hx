@@ -14,13 +14,13 @@ class ParameterizedMessageTest
 	
 	public static var parameters:Array<Array<Dynamic>> = [
 		["Test message {}", null, "Test message {}"],
-		["Test message {}", [], "Test message {}"],
+		["Test message {}", [], "Test message null"],
 		["", null, ""],
 		["", [], ""],
 		["d", null, "d"],
 		["d", [], "d"],
 		["{}", null, "{}"],
-		["{}", [], "{}"],
+		["{}", [], "null"],
 		["{}", ["a"], "a"],
 		["{}", [null], "null"],
 		["{           }", ["a"], "a"],
