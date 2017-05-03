@@ -12,7 +12,7 @@ class ParameterFormatter
 	
 	static public function formatMessage(buffer:StringBuf, messagePattern:String, params:Array<Dynamic>) 
 	{
-		if (messagePattern == null || params == null || params.length == 0)
+		if (messagePattern == null || params == null)
 		{
 			buffer.add(messagePattern);
 			return;
