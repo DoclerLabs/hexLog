@@ -15,11 +15,4 @@ class TraceLogTarget extends AbstractLogTarget
 	{
 		Log.trace(getLayout().toString(message), message.posInfos);
 	}
-	
-	public function onClear() : Void 
-	{
-		#if (flash || js)
-		Log.clear();
-		#end
-	}
 }
