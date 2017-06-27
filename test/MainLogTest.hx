@@ -16,7 +16,7 @@ class MainLogTest
 		var emu = new ExMachinaUnitCore();
         
 		#if flash
-		emu.addListener( new TraceNotifier( Lib.current.loaderInfo ) );
+		emu.addListener( new TraceNotifier( Lib.current.loaderInfo, false, true ) );
 		#elseif js
 		emu.addListener( new ConsoleNotifier( false ) );
 		#else
