@@ -2,4 +2,6 @@
 -cp test
 -lib hexunit
 -lib hexlog
--D debug=true
+
+-D debug
+-D eval-stack
