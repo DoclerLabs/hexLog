@@ -1,13 +1,7 @@
 package;
 
+import hex.HexLogSuite;
 import hex.unittest.runner.ExMachinaUnitCore;
-import hex.unittest.notifier.TraceNotifier;
-
-#if js
-import hex.unittest.notifier.ConsoleNotifier;
-#elseif flash
-import flash.Lib;
-#end
 
 class MainLogTest
 {
@@ -16,14 +10,14 @@ class MainLogTest
 		var emu = new ExMachinaUnitCore();
         
 		#if flash
-		emu.addListener( new TraceNotifier( Lib.current.loaderInfo, false, true ) );
-		#elseif js
-		emu.addListener( new ConsoleNotifier( false ) );
+		emu.addListener( new hex.unittest.notifier.TraceNotifier( flash.Lib.current.loaderInfo, false, true ) );
+		#elseif (php && haxe_ver < 4.0)
+		emu.addListener( new hex.unittest.notifier.TraceNotifier( ) );
 		#else
-		emu.addListener( new TraceNotifier( false ) );
+		emu.addListener( new hex.unittest.notifier.ConsoleNotifier( ) );
 		#end
 		
-        emu.addTest( hex.HexLogSuite );
+        emu.addTest( HexLogSuite );
         emu.run();
 	}
 }
