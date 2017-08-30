@@ -16,6 +16,7 @@ class MainLogTest
 		#else
 		emu.addListener( new hex.unittest.notifier.ConsoleNotifier( ) );
 		#end
+		emu.addListener( new hex.unittest.notifier.ExitingNotifier( ) );
 		
         emu.addTest( HexLogSuite );
         emu.run();
