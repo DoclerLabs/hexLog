@@ -20,7 +20,7 @@ class BasicConfiguration extends AbstractFilterable implements IConfiguration
 	public function new() 
 	{
 		super();
-		root = RootLogger.createLogger();
+		root = LoggerConfig.createRootLogger();
 		root.level = LogLevel.ERROR;
 		loggerConfigs = new Map<String, LoggerConfig>();
 		logTargets = new Map<String, ILogTarget>();

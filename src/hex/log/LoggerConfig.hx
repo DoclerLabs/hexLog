@@ -100,13 +100,8 @@ class LoggerConfig extends AbstractFilterable
         var loggerName = name == "root" ? "" : name;
 		return new LoggerConfig(name, level, config);
 	}
-	
-	
-}
 
-class RootLogger extends LoggerConfig
-{
-	public static function createLogger(?level:Null<LogLevel>):LoggerConfig
+	public static function createRootLogger(?level:Null<LogLevel>):LoggerConfig
 	{
 		var actualLevel:LogLevel = level == null ? LogLevel.ERROR : level;
 		return new LoggerConfig("", actualLevel);
