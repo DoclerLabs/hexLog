@@ -79,8 +79,9 @@ class LoggerConfig extends AbstractFilterable
 
     function callLogTargets(event:LogEvent):Void
 	{
-        logTargets.map(function (control:LogTargetControl):Void{
+        logTargets.map(function (control:LogTargetControl){
 			control.callLogTarget(event);
+			return control;
 		});
     }
 	
