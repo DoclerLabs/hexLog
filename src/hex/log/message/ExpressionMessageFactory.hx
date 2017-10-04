@@ -28,11 +28,16 @@ class ExpressionMessageFactory implements IMessageFactory
 	
 	public function newObjectMessage(message:Dynamic):IMessage 
 	{
-		var isExpr = switch([Reflect.hasField(message, "expr"), Reflect.hasField(message, "pos")])
+		var isExpr = try 
 		{
-			case [true, true]:true;
-			case _: false;
+			switch([Reflect.hasField(message, "expr"), Reflect.hasField(message, "pos")])
+			{
+				case [true, true]:true;
+				case _: false;
+			} 
 		}
+		catch (e:Dynamic) false;
+		
 		if (isExpr)
 		{
 			return new ExpressionMessage(message);
