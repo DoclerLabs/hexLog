@@ -1,11 +1,10 @@
 package hex.log;
+
 import hex.log.helper.TestLogger;
 import hex.log.helper.TestLoggerContext;
 import hex.log.message.ParameterizedMessageFactory;
 import hex.log.message.SimpleMessageFactory;
 import hex.unittest.assertion.Assert;
-
-
 
 class LoggerTest 
 {
@@ -75,7 +74,7 @@ class LoggerTest
 		Assert.equals("DEBUG {}", testLogger.entries.first(), "Incorrect message");
 	}
 	
-	public static var levelsDataProvider:Array<Array<LogLevel>> = [for (level in LogLevel.LEVELS) [level]];
+	public static var levelsDataProvider:Array<LogLevel> = LogLevel.LEVELS;
 	
 	@Test("Test is level enabled")
 	@DataProvider("levelsDataProvider")
