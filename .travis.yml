@@ -38,6 +38,8 @@ install:
 #hexUnit
   - git clone --recursive -b $DEPENDENCIES_BRANCH https://github.com/DoclerLabs/hexUnit.git ./hexunit
   - haxelib dev hexunit ./hexunit
+#tink_macro
+  - haxelib install tink_macro 0.16.1
 #hexLog
   - haxelib dev hexlog .
   - haxelib path hexlog
