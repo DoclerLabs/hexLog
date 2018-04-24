@@ -1,5 +1,5 @@
 package hex.log;
-import hex.log.LogManager.ClassInfo;
+
 import hex.log.configuration.BasicConfiguration;
 import hex.log.configuration.IConfiguration;
 import hex.log.message.IMessageFactory;
@@ -23,18 +23,6 @@ class LoggerContext implements ILoggerContext
 	{
 		configuration = new BasicConfiguration();
 		loggerRegistry = new Map<String,Logger>();
-	}
-	
-	public function getLoggerByClassInfo(classInfo:ClassInfo, ?messageFactory:IMessageFactory):ILogger
-	{
-		if(classInfo == null)
-		{
-			return getLogger(null, messageFactory);
-		}
-		else
-		{
-			return getLogger(classInfo.fqcn, messageFactory);
-		}
 	}
 	
 	public function getLogger(name:String, ?messageFactory:IMessageFactory):ILogger

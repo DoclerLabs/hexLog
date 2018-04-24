@@ -1,5 +1,4 @@
 package hex.log.layout;
-import haxe.PosInfos;
 import hex.log.LogEvent;
 
 /**

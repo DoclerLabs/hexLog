@@ -3,7 +3,6 @@ import hex.log.ILoggerContext;
 import hex.log.LogEvent;
 import hex.log.Logger.PrivateLoggerConfig;
 import hex.log.filter.IFilter;
-import haxe.PosInfos;
 import hex.log.LogLevel;
 import hex.log.configuration.IConfiguration;
 import hex.log.filter.IFilter.FilterResult;
