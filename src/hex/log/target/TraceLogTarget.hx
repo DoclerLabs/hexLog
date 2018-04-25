@@ -12,6 +12,10 @@ class TraceLogTarget extends AbstractLogTarget
 {
 	override function logInternal( message : LogEvent ) : Void 
 	{
-		Log.trace(getLayout().toString(message), cast message.posInfos);
+		#if remove_pos_infos
+		Log.trace(getLayout().toString(message) );
+		#else
+		Log.trace(getLayout().toString(message), message.posInfos);
+		#end
 	}
 }

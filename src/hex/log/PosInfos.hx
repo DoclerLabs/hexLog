@@ -1,8 +1,6 @@
 package hex.log;
 
-#if hex_log_positions
-typedef PosInfos = haxe.PosInfos;
-#else
+#if remove_pos_infos
 abstract PosInfos(Dynamic) {
 	public var className(get, never):String;
 		inline function get_className() return '';
@@ -13,4 +11,6 @@ abstract PosInfos(Dynamic) {
 	public var lineNumber(get, never):Int;
 		inline function get_lineNumber() return -1;
 }
+#else
+typedef PosInfos = haxe.PosInfos;
 #end
