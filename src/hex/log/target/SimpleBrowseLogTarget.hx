@@ -3,7 +3,6 @@ import hex.log.filter.IFilter;
 import hex.log.layout.ILayout;
 
 #if js
-//import hex.domain.Domain;
 import hex.log.LogLevel;
 import hex.log.LogEvent;
 import js.Browser;
