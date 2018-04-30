@@ -33,19 +33,18 @@ before_install:
 install:
   - haxelib newrepo
   - export BRANCH_REF=$DEPENDENCIES_BRANCH
-#hexCore
+# hexCore
   - if [[ $( git ls-remote --heads https://github.com/DoclerLabs/hexCore.git $DEPENDENCIES_BRANCH | wc -l ) == "0" ]]; then export DEPENDENCIES_BRANCH=develop; else export DEPENDENCIES_BRANCH=$BRANCH_REF; fi
   - echo Checking out $DEPENDENCIES_BRANCH
   - git clone --recursive -b $DEPENDENCIES_BRANCH https://github.com/DoclerLabs/hexCore.git ./hexcore
+  - haxelib install ./hexcore/haxelib.json --always
   - haxelib dev hexcore ./hexcore
-#hexUnit
+# hexUnit
   - if [[ $( git ls-remote --heads https://github.com/DoclerLabs/hexUnit.git $DEPENDENCIES_BRANCH | wc -l ) == "0" ]]; then export DEPENDENCIES_BRANCH=develop; else export DEPENDENCIES_BRANCH=$BRANCH_REF; fi
   - echo Checking out $DEPENDENCIES_BRANCH
   - git clone --recursive -b $DEPENDENCIES_BRANCH https://github.com/DoclerLabs/hexUnit.git ./hexunit
   - haxelib dev hexunit ./hexunit
-#tink_macro
-  - haxelib install tink_macro 0.16.4
-#hexLog
+# hexLog
   - haxelib dev hexlog .
   - haxelib path hexlog
   - export DISPLAY=:99.0;
