@@ -53,41 +53,6 @@ class LogManagerTest
 		Assert.notEquals(logger1, logger2);
 	}
 	
-	@Test("Get logger by class info")
-	public function testGetLoggerByClassInfo()
-	{
-		var logger = LogManager.getLoggerByClassInfo({fqcn:"hex.log.LogManagerTest"});
-		Assert.isNotNull(logger);
-	}
-	
-	@Test("Get logger with null class info")
-	public function testGetLoggerNullClassInfo()
-	{
-		var logger = LogManager.getLoggerByClassInfo(null);
-		Assert.isNotNull(logger);
-	}
-	
-	@Test("Loggers with same class info are same instance")
-	public function testGetLoggerByClassInfoSameInfoSameInstance()
-	{
-		var logger1 = LogManager.getLoggerByClassInfo({fqcn:"hex.log.LogManagerTest"});
-		var logger2 = LogManager.getLoggerByClassInfo({fqcn:"hex.log.LogManagerTest"});
-		
-		Assert.equals(logger1.getName(), logger2.getName(), "Names must be same");
-		Assert.equals(logger1, logger2);
-	}
-	
-	@Test("Loggers with different class info are different instance")
-	public function testGetLoggerByClassInfoDifferentInfoDifferentInstance()
-	{
-		var logger1 = LogManager.getLoggerByClassInfo({fqcn:"hex.log.LogManagerTest1"});
-		var logger2 = LogManager.getLoggerByClassInfo({fqcn:"hex.log.LogManagerTest2"});
-		
-		Assert.notEquals(logger1.getName(), logger2.getName(), "Names must be different");
-		Assert.notEquals(logger1, logger2);
-	}
-	
-	
 	@Test("Get root logger")
 	public function testGetRootLogger()
 	{
@@ -125,7 +90,7 @@ class LogManagerTest
 	@Test("Get logger by class null class")
 	public function testGetLoggerByInstanceNull()
 	{
-		var logger = LogManager.getLoggerByClass(null);
+		var logger = LogManager.getLoggerByInstance(null);
 		Assert.isNotNull(logger);
 		Assert.equals("", logger.getName(), "Logger name must be the same");
 	}

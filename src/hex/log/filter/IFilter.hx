@@ -1,5 +1,4 @@
 package hex.log.filter;
-import haxe.PosInfos;
 import hex.log.ILogger;
 import hex.log.LogEvent;
 import hex.log.LogLevel;

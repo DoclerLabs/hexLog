@@ -12,29 +12,14 @@ class LogManager
 	
 	static public var context:ILoggerContext = new LoggerContext();
 	
-	static public function getLoggerByClassInfo(classInfo:ClassInfo, ?messageFactory:IMessageFactory = null):ILogger
+	static public function getLoggerByInstance(target:{}, ?messageFactory:IMessageFactory = null):ILogger
 	{
-		return getContext().getLoggerByClassInfo(classInfo, messageFactory);
-	}
-	
-	static public function getLoggerByInstance<T>(target:T, ?messageFactory:IMessageFactory = null):ILogger
-	{
-		if (target == null)
-		{
-			return getLogger("", messageFactory);
-		}
-		var type = Type.getClassName( Type.getClass( target ) );
-		return getLogger(type != null ? type : "Dynamic", messageFactory);
+		return getLoggerByClass(Type.getClass(target), messageFactory);
 	}
 	
 	static public function getLoggerByClass(clss:Class<Dynamic>, ?messageFactory:IMessageFactory = null):ILogger
 	{
-		if (clss == null)
-		{
-			return getLogger("", messageFactory);
-		}
-		var type = Type.getClassName( clss );
-		return getLogger(type != null ? type : "Dynamic", messageFactory);
+		return clss != null ? getLogger(Type.getClassName(clss), messageFactory) : getLogger('', messageFactory);
 	}
 	
 	static public function getLogger(?name:String = "", ?messageFactory:IMessageFactory = null):ILogger
