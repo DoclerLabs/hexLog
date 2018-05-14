@@ -34,7 +34,7 @@ class LoggerConfig extends AbstractFilterable
 		return level = value;
 	}
 	
-	function get_level():LogLevel 
+	function get_level():Null<LogLevel>
 	{
 		return level == null ? parent.level : level;
 	}
