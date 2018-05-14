@@ -1,7 +1,6 @@
 package hex.log.filter;
 import hex.log.message.IMessage;
 import hex.log.LogEvent;
-import haxe.PosInfos;
 import hex.log.LogLevel;
 import hex.log.ILogger;
 import hex.log.filter.IFilter.FilterResult;

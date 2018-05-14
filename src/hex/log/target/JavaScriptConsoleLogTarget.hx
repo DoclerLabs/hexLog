@@ -3,7 +3,6 @@ import hex.log.LogEvent;
 import hex.log.LogLevel;
 
 #if js
-import haxe.PosInfos;
 import hex.log.target.ILogTarget;
 import js.Browser;
 

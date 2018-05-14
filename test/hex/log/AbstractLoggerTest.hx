@@ -1,6 +1,5 @@
 package hex.log;
 
-import haxe.PosInfos;
 import hex.log.LogLevel;
 import hex.log.internal.AbstractLogger;
 import hex.log.message.IMessage;
