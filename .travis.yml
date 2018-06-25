@@ -19,16 +19,17 @@ before_install:
   - if [[ "$TRAVIS_TAG" != "" ]]; then export DEPENDENCIES_BRANCH=$TRAVIS_TAG; fi
   - echo $DEPENDENCIES_BRANCH
   - sudo sed -i -e 's/deb http/deb [arch=amd64] http/' "/etc/apt/sources.list.d/google-chrome.list" "/opt/google/chrome/cron/google-chrome"
-  - sudo dpkg --add-architecture i386
   - sudo apt-get update
-  - sudo apt-get install -qq libcurl3:i386
-  - sudo apt-get install -qq libglib2.0-0:i386
-  - sudo apt-get install -qq libx11-6:i386
-  - sudo apt-get install -qq libxext6:i386
-  - sudo apt-get install -qq libxt6:i386
-  - sudo apt-get install -qq libxcursor1:i386
-  - sudo apt-get install -qq libnss3:i386
-  - sudo apt-get install -qq libgtk2.0-0:i386
+  - sudo apt-get install -y xvfb
+  - sudo apt-get install -qq libcurl3
+  - sudo apt-get install -qq libglib2.0-0
+  - sudo apt-get install -qq libx11-6
+  - sudo apt-get install -qq libxext6
+  - sudo apt-get install -qq libxt6
+  - sudo apt-get install -qq libxcursor1
+  - sudo apt-get install -qq libnss3
+  - sudo apt-get install -qq libgtk2.0-0
+  - sudo apt-get install -qq xvfb
 
 install:
   - haxelib newrepo
