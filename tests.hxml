@@ -1,7 +1,8 @@
 -main MainLogTest
+
 -cp test
+
 -lib hexunit
 -lib hexlog
 
 -D debug
--D eval-stack
