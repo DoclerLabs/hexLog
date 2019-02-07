@@ -46,6 +46,8 @@ before_install:
   - echo $TRAVIS_TAG
   - if [[ "$TRAVIS_TAG" != "" ]]; then export DEPENDENCIES_BRANCH=$TRAVIS_TAG; fi
   - echo $DEPENDENCIES_BRANCH
+  - args=()
+  - if [ "$HAXE_VERSION" == "development" ]; then args+=(-lib); args+=(hx3compat); fi
 
 install:
   - export BRANCH_REF=$DEPENDENCIES_BRANCH
@@ -67,7 +69,7 @@ install:
   - haxelib path hexlog
 
 script:
-  - haxelib run travix $HAXE_TARGET
+  - haxelib run travix $HAXE_TARGET "${args[@]}"
   
 notifications:
   email:
