@@ -8,7 +8,6 @@ os:
 
 # haxe versions : http://haxe.org/website-content/downloads/versions.json
 haxe:
-  - "3.4.7"
   - development
 
 env:
@@ -52,7 +51,7 @@ before_install:
 install:
   - export BRANCH_REF=$DEPENDENCIES_BRANCH
   - haxelib install hx3compat
-  - haxelib git travix https://github.com/back2dos/travix && pushd . && cd $(haxelib config)travix/git && haxe build-neko.hxml "${args[@]}" && popd
+  - haxelib git travix https://github.com/back2dos/travix && pushd . && cd $(haxelib config)travix/git && haxe build-neko.hxml -lib hx3compat && popd
 # hexCore
   - if [ $( git ls-remote https://github.com/DoclerLabs/hexCore.git $BRANCH_REF --heads | wc -l ) == "0" ]; then export DEPENDENCIES_BRANCH=master; else export DEPENDENCIES_BRANCH=$BRANCH_REF; fi
   - echo Checking out $DEPENDENCIES_BRANCH
@@ -70,10 +69,3 @@ install:
 
 script:
   - haxelib run travix $HAXE_TARGET
-  
-notifications:
-  email:
-    recipients:
-      - francis_bourre@me.com
-      - peterphonix@gmail.com
-      - laurent@geturl.net
