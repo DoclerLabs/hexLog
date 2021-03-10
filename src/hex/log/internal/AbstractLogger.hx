@@ -85,7 +85,7 @@ class AbstractLogger implements IExtendedLogger
 	{
 		if (isEnabled(level, message, params, posInfos))
 		{
-			if(Std.is(message, String) || message == null)
+			if(Std.isOfType(message, String) || message == null)
 			{
 				logEnabledMessage(level, messageFactory.newMessage(message, params), posInfos);
 			}
