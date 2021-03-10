@@ -26,7 +26,7 @@ class CompositeFilter implements IFilter
 		{
 			return this;
 		}
-		if (Std.is(filter, CompositeFilter))
+		if (Std.isOfType(filter, CompositeFilter))
 		{
 			var composite:CompositeFilter = cast filter;
 			return new CompositeFilter(filters.copy().concat(composite.filters.copy()));
@@ -44,7 +44,7 @@ class CompositeFilter implements IFilter
 		}
 		
 		var newFilters = filters.copy();
-		if (Std.is(filter, CompositeFilter))
+		if (Std.isOfType(filter, CompositeFilter))
 		{
 			var composite:CompositeFilter = cast filter;
 			for (f in composite.filters)

@@ -25,7 +25,7 @@ class AbstractFilterable implements IFilterable
 		{
 			this.filter = filter;
 		}
-		else if (Std.is(this.filter, CompositeFilter))
+		else if (Std.isOfType(this.filter, CompositeFilter))
 		{
 			this.filter = (cast this.filter:CompositeFilter).addFilter(filter);
 		}
@@ -45,7 +45,7 @@ class AbstractFilterable implements IFilterable
 		{
 			this.filter = null;
 		}
-		else if (Std.is(this.filter, CompositeFilter))
+		else if (Std.isOfType(this.filter, CompositeFilter))
 		{
 			var composite:CompositeFilter = cast this.filter;
 			composite = composite.removeFilter(filter);
